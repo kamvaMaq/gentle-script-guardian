@@ -52,7 +52,7 @@ function FantasyTab() {
               {l.picks.map((n, i) => {
                 const p = n ? byName(n) : null;
                 return p ? (
-                  <div key={i} className="flex w-16 flex-col items-center rounded-lg border-2 bg-background/80 px-1 py-1.5 text-center" style={{ borderColor: teams[p.team].color }}>
+                  <div key={i} className="flex w-16 flex-col items-center rounded-lg border-2 bg-background/80 px-1 py-1.5 text-center" style={{ borderColor: teams[p.team]!.color }}>
                     <span className="text-xl">👕</span>
                     <span className="w-full truncate text-[11px] font-bold">{p.name.split(" ").slice(-1)}</span>
                     <span className="text-[10px] text-primary">R{p.price.toFixed(1)}M</span>
@@ -86,7 +86,7 @@ function FantasyTab() {
               {fantasy.map((p) => (
                 <tr key={p.name} className="border-t text-center [&>td]:px-2 [&>td]:py-2">
                   <td className="text-left">
-                    <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full" style={{ background: teams[p.team].color }} /><span className="font-semibold">{p.name}</span></div>
+                    <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full" style={{ background: teams[p.team]!.color }} /><span className="font-semibold">{p.name}</span></div>
                     <div className="pl-4.5 text-[10px] text-muted-foreground">{p.team} · <span className={diffColor[p.diff]}>{p.next}</span></div>
                   </td>
                   <td><span className={cn("rounded px-1.5 py-0.5 font-bold", posChip[p.pos])}>{p.pos}</span></td>

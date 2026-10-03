@@ -47,7 +47,7 @@ function TableTab() {
               return (
                 <tr key={r.team} className={cn("border-l-4 border-t [&>td]:px-1.5 [&>td]:py-2 [&>td]:text-center", zone)}>
                   <td className="font-display font-bold">{pos}</td>
-                  <td className="!text-left"><span className="flex items-center gap-2 font-semibold"><TeamLogo team={r.team} size={20} />{teams[r.team].short}</span></td>
+                  <td className="!text-left"><span className="flex items-center gap-2 font-semibold"><TeamLogo team={r.team} size={20} />{teams[r.team]!.short}</span></td>
                   <td>{r.p}</td><td>{r.w}</td><td>{r.d}</td><td>{r.l}</td><td>{r.gf}</td><td>{r.ga}</td>
                   <td>{gd > 0 ? "+" : ""}{gd}</td>
                   <td><span className="flex justify-center gap-0.5">{r.form.map((f, i) => <FormDot key={i} r={f} />)}</span></td>

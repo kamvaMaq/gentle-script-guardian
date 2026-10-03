@@ -101,7 +101,7 @@ export const statRows = (s: Stats) => [
 export function LiveMatchCard({ match, expanded }: { match: Match; expanded?: boolean }) {
   const nav = useNavigate();
   const minute = useLiveMinute(match.minute ?? 0);
-  const h = teams[match.home], a = teams[match.away];
+  const h = teams[match.home]!, a = teams[match.away]!;
   const hs = match.hs ?? 0, as = match.as ?? 0;
   return (
     <article
@@ -164,12 +164,12 @@ export function UpcomingCard({ match, expanded }: { match: Match; expanded?: boo
     <article className={cn("card-hover rounded-xl border bg-card p-3", match.derby && "border-live")}>
       {match.derby && <div className="mb-2 font-display text-xs font-bold text-live">🔥 {match.derby}</div>}
       <Link to="/matches/$id" params={{ id: match.id }} className="flex items-center justify-between gap-2">
-        <div className="flex w-28 items-center gap-2"><TeamLogo team={match.home} size={28} /><span className="text-sm font-semibold">{teams[match.home].short}</span></div>
+        <div className="flex w-28 items-center gap-2"><TeamLogo team={match.home} size={28} /><span className="text-sm font-semibold">{teams[match.home]!!.short}</span></div>
         <div className="text-center">
           <div className="font-display text-xl font-extrabold text-primary">{match.time}</div>
           <div className="text-[11px] text-muted-foreground">{match.date}</div>
         </div>
-        <div className="flex w-28 items-center justify-end gap-2"><span className="text-sm font-semibold">{teams[match.away].short}</span><TeamLogo team={match.away} size={28} /></div>
+        <div className="flex w-28 items-center justify-end gap-2"><span className="text-sm font-semibold">{teams[match.away]!!.short}</span><TeamLogo team={match.away} size={28} /></div>
       </Link>
       <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
         <span>📍 {match.venue}</span>
@@ -197,8 +197,8 @@ function LeagueLogo() {
 
 export function Header() {
   const live = matches.filter((m) => m.status === "live");
-  const items = [...live.map((m) => `🔴 ${teams[m.home].short} ${m.hs}–${m.as} ${teams[m.away].short} ${m.minute}'`),
-    ...matches.filter((m) => m.status === "ft").map((m) => `FT ${teams[m.home].short} ${m.hs}–${m.as} ${teams[m.away].short}`)];
+  const items = [...live.map((m) => `🔴 ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short} ${m.minute}'`),
+    ...matches.filter((m) => m.status === "ft").map((m) => `FT ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short}`)];
   return (
     <header className="sticky top-0 z-30 border-b bg-background/95 backdrop-blur">
       <div className="flex items-center justify-between px-4 py-2.5">

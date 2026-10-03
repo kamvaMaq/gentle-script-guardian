@@ -34,12 +34,12 @@ function MatchesTab() {
         {f === "upcoming" && list.map((m) => <UpcomingCard key={m.id} match={m} expanded />)}
         {f === "ft" && list.map((m) => (
           <Link key={m.id} to="/matches/$id" params={{ id: m.id }} className="card-hover flex items-center justify-between rounded-xl border bg-card p-3">
-            <div className="flex w-24 items-center gap-2"><TeamLogo team={m.home} size={26} /><span className="font-semibold">{teams[m.home].short}</span></div>
+            <div className="flex w-24 items-center gap-2"><TeamLogo team={m.home} size={26} /><span className="font-semibold">{teams[m.home]!.short}</span></div>
             <div className="text-center">
               <div className="font-display text-2xl font-black">{m.hs} – {m.as}</div>
               <div className="text-[11px] text-muted-foreground">FT · {m.date}</div>
             </div>
-            <div className="flex w-24 items-center justify-end gap-2"><span className="font-semibold">{teams[m.away].short}</span><TeamLogo team={m.away} size={26} /></div>
+            <div className="flex w-24 items-center justify-end gap-2"><span className="font-semibold">{teams[m.away]!.short}</span><TeamLogo team={m.away} size={26} /></div>
           </Link>
         ))}
       </div>

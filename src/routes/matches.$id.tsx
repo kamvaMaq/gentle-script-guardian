@@ -11,7 +11,7 @@ export const Route = createFileRoute("/matches/$id")({
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ title: "Match not found" }, { name: "robots", content: "noindex" }] };
     const m = loaderData.match;
-    const t = `${teams[m.home].name} vs ${teams[m.away].name} — Match Centre`;
+    const t = `${teams[m.home]!.name} vs ${teams[m.away]!.name} — Match Centre`;
     return { meta: [{ title: t }, { name: "description", content: `Score, events and stats at ${m.venue}.` }, { property: "og:title", content: t }, { property: "og:description", content: `Match centre at ${m.venue}.` }] };
   },
   notFoundComponent: () => <div className="p-8 text-center">Match not found. <Link to="/matches" className="text-primary">Back</Link></div>,
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/matches/$id")({
 
 function MatchDetail() {
   const { match: m } = Route.useLoaderData();
-  const h = teams[m.home], a = teams[m.away];
+  const h = teams[m.home], a = teams[m.away]!;
   const minute = useLiveMinute(m.minute ?? 0);
   const hs = m.hs ?? 0, as = m.as ?? 0;
   const played = m.status !== "upcoming";

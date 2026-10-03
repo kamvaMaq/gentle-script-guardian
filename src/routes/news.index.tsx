@@ -19,7 +19,7 @@ const cats = ["ALL", "TRANSFER", "MATCH REPORT", "FANTASY", "INJURY", "INTERVIEW
 
 function NewsTab() {
   const [cat, setCat] = useState("ALL");
-  const [featured, ...rest] = news;
+  const featured = news[0]!; const rest = news.slice(1);
   const list = rest.filter((n) => cat === "ALL" || n.cat.toUpperCase() === cat);
   return (
     <div className="space-y-5 p-4">
