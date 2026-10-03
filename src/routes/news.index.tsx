@@ -15,7 +15,7 @@ export const Route = createFileRoute("/news/")({
   component: NewsTab,
 });
 
-const cats = ["ALL", "TRANSFER", "MATCH REPORT", "FANTASY", "INJURY", "INTERVIEW", "AWARDS"];
+const cats = ["ALL", "NEWS", "MATCH REPORT", "TRANSFER", "INTERVIEW", "AWARDS", "FEATURE"];
 
 function NewsTab() {
   const [cat, setCat] = useState("ALL");
@@ -23,13 +23,13 @@ function NewsTab() {
   const list = rest.filter((n) => cat === "ALL" || n.cat.toUpperCase() === cat);
   return (
     <div className="space-y-5 p-4">
-      <article className="glow-orange rounded-xl border border-orange bg-card p-5">
+      <article className="rounded-xl border border-l-4 border-l-primary bg-card p-5">
         <div className="text-5xl">{featured.emoji}</div>
         <span className={cn("mt-3 inline-block rounded px-1.5 py-0.5 text-[10px] font-bold uppercase", catColor[featured.cat])}>{featured.cat}</span>
         <h1 className="mt-2 font-display text-2xl font-black leading-tight">{featured.title}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{featured.summary}</p>
         <div className="mt-3 text-xs text-muted-foreground">✏️ {featured.author} · {featured.ago}</div>
-        <Link to="/news/$id" params={{ id: featured.id }} className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 font-display font-bold uppercase text-primary-foreground">Read Article →</Link>
+        <Link to="/news/$id" params={{ id: featured.id }} className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 font-display font-bold uppercase text-primary-foreground">Read →</Link>
       </article>
       <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4">
         {cats.map((c) => (

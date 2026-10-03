@@ -26,7 +26,7 @@ function MatchDetail() {
   const played = m.status !== "upcoming";
   return (
     <div>
-      <div className="px-4 py-6" style={{ background: `linear-gradient(90deg, ${h.color}33, transparent 50%, ${a.color}33)` }}>
+      <div className="px-4 py-6" style={{ background: `linear-gradient(90deg, ${h.color}22, transparent 50%, ${a.color}22)` }}>
         <div className="mb-4 flex justify-center">
           {m.status === "live" ? (
             <span className="flex items-center gap-1.5 rounded-full bg-live/15 px-3 py-1 font-display font-bold text-live"><LiveDot /> LIVE {minute}'</span>
