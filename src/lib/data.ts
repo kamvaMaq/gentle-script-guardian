@@ -1,26 +1,27 @@
-const L = (id: number) => `https://tmssl.akamaized.net/images/wappen/big/${id}.png`;
+const L = (name: string) => `https://imageorigin.supersport.com/psl/clublogos/small/${encodeURIComponent(name)}.png`;
 
 export type Res = "W" | "D" | "L";
 export type Team = { key: string; name: string; short: string; logo: string; color: string };
 
+export const SEASON = "2026/27";
 
 export const teams: Record<string, Team> = {
-  SUN: { key: "SUN", name: "Mamelodi Sundowns", short: "SUN", logo: L(6356), color: "#FFD700" },
-  KAI: { key: "KAI", name: "Kaizer Chiefs", short: "KAI", logo: L(7081), color: "#F7B500" },
-  ORL: { key: "ORL", name: "Orlando Pirates", short: "ORL", logo: L(7085), color: "#9CA3AF" },
-  AMA: { key: "AMA", name: "AmaZulu", short: "AMA", logo: L(7079), color: "#16A34A" },
-  SEK: { key: "SEK", name: "Sekhukhune United", short: "SEK", logo: L(85501), color: "#2563EB" },
-  DUR: { key: "DUR", name: "Durban City", short: "DUR", logo: L(22348), color: "#0EA5E9" },
-  TSG: { key: "TSG", name: "TS Galaxy", short: "TSG", logo: L(19298), color: "#DC2626" },
-  POL: { key: "POL", name: "Polokwane City", short: "POL", logo: L(7099), color: "#EA580C" },
-  RBY: { key: "RBY", name: "Richards Bay", short: "RBY", logo: L(18825), color: "#0891B2" },
-  ARR: { key: "ARR", name: "Golden Arrows", short: "ARR", logo: L(7077), color: "#65A30D" },
-  SIW: { key: "SIW", name: "Siwelele", short: "SIW", logo: L(131361), color: "#7C3AED" },
-  STE: { key: "STE", name: "Stellenbosch FC", short: "STE", logo: L(18615), color: "#B91C1C" },
-  MAR: { key: "MAR", name: "Marumo Gallants", short: "MAR", logo: L(13317), color: "#CA8A04" },
-  ORB: { key: "ORB", name: "Orbit College", short: "ORB", logo: L(19000), color: "#4F46E5" },
-  CHI: { key: "CHI", name: "Chippa United", short: "CHI", logo: L(11913), color: "#1D4ED8" },
-  MAG: { key: "MAG", name: "Magesi FC", short: "MAG", logo: L(18611), color: "#15803D" },
+  SUN: { key: "SUN", name: "Mamelodi Sundowns", short: "SUN", logo: L("Mamelodi Sundowns"), color: "#FFD700" },
+  ORL: { key: "ORL", name: "Orlando Pirates", short: "ORL", logo: L("Orlando Pirates"), color: "#9CA3AF" },
+  AMA: { key: "AMA", name: "AmaZulu FC", short: "AMA", logo: L("AmaZulu FC"), color: "#16A34A" },
+  KAI: { key: "KAI", name: "Kaizer Chiefs", short: "KAI", logo: L("Kaizer Chiefs"), color: "#F7B500" },
+  MIL: { key: "MIL", name: "Milford FC", short: "MIL", logo: L("Milford FC"), color: "#0EA5E9" },
+  SEK: { key: "SEK", name: "Sekhukhune United", short: "SEK", logo: L("Sekhukhune United"), color: "#2563EB" },
+  STE: { key: "STE", name: "Stellenbosch FC", short: "STE", logo: L("Stellenbosch FC"), color: "#B91C1C" },
+  ARR: { key: "ARR", name: "Golden Arrows", short: "ARR", logo: L("Golden Arrows"), color: "#65A30D" },
+  CHI: { key: "CHI", name: "Chippa United", short: "CHI", logo: L("Chippa United"), color: "#1D4ED8" },
+  DUR: { key: "DUR", name: "Durban City", short: "DUR", logo: L("Durban City"), color: "#0891B2" },
+  POL: { key: "POL", name: "Polokwane City", short: "POL", logo: L("Polokwane City"), color: "#EA580C" },
+  GAL: { key: "GAL", name: "TS Galaxy", short: "GAL", logo: L("TS Galaxy"), color: "#DC2626" },
+  MAR: { key: "MAR", name: "Marumo Gallants", short: "MAR", logo: L("Marumo Gallants"), color: "#CA8A04" },
+  RIC: { key: "RIC", name: "Richards Bay", short: "RIC", logo: L("Richards Bay"), color: "#0E7490" },
+  SIW: { key: "SIW", name: "Siwelele", short: "SIW", logo: L("Siwelele"), color: "#7C3AED" },
+  KRU: { key: "KRU", name: "Kruger United", short: "KRU", logo: L("Kruger United"), color: "#15803D" },
 };
 
 export type Row = { team: string; p: number; w: number; d: number; l: number; gf: number; ga: number; pts: number; form: Res[] };
@@ -28,35 +29,35 @@ const r = (team: string, p: number, w: number, d: number, l: number, gf: number,
   ({ team, p, w, d, l, gf, ga, pts, form: f.split(",") as Res[] });
 
 export const standings: Row[] = [
-  r("SUN", 15, 9, 5, 1, 24, 7, 32, "W,W,W,D,W"),
-  r("KAI", 15, 8, 6, 1, 15, 6, 30, "D,W,W,D,D"),
-  r("ORL", 13, 9, 2, 2, 18, 5, 29, "W,W,W,D,W"),
-  r("AMA", 15, 8, 3, 4, 18, 14, 27, "W,D,W,L,W"),
-  r("SEK", 16, 7, 5, 4, 16, 10, 26, "W,D,W,D,L"),
-  r("DUR", 16, 7, 4, 5, 15, 11, 25, "W,L,D,W,D"),
-  r("TSG", 16, 7, 3, 6, 22, 16, 24, "L,L,L,L,L"),
-  r("POL", 15, 6, 5, 4, 11, 9, 23, "D,W,D,L,W"),
-  r("RBY", 16, 4, 7, 5, 14, 16, 19, "W,D,D,D,D"),
-  r("ARR", 16, 5, 2, 9, 21, 22, 17, "W,L,D,W,L"),
-  r("SIW", 16, 4, 5, 7, 9, 14, 17, "D,L,D,L,D"),
-  r("STE", 15, 4, 3, 8, 11, 18, 15, "L,D,D,L,W"),
-  r("MAR", 16, 3, 6, 7, 12, 20, 15, "D,L,D,W,D"),
-  r("ORB", 16, 4, 1, 11, 12, 28, 13, "W,L,L,L,L"),
-  r("CHI", 16, 2, 6, 8, 8, 21, 12, "D,L,D,L,D"),
-  r("MAG", 14, 2, 5, 7, 10, 19, 11, "D,L,D,L,L"),
+  r("SUN", 8, 6, 2, 0, 20, 4, 20, "W,W,W,D,W"),
+  r("ORL", 7, 6, 1, 0, 19, 6, 19, "W,W,W,W,D"),
+  r("AMA", 7, 5, 1, 1, 16, 8, 16, "W,W,W,D,L"),
+  r("KAI", 7, 3, 4, 0, 13, 7, 13, "W,D,D,D,W"),
+  r("MIL", 8, 3, 3, 2, 12, 9, 12, "W,L,D,W,D"),
+  r("SEK", 7, 3, 2, 2, 11, 9, 11, "D,W,L,W,D"),
+  r("STE", 7, 2, 3, 2, 9, 9, 9, "W,D,L,D,D"),
+  r("ARR", 7, 1, 5, 1, 8, 7, 8, "D,W,D,D,L"),
+  r("CHI", 7, 1, 5, 1, 7, 7, 8, "W,D,D,L,D"),
+  r("DUR", 7, 1, 4, 2, 7, 7, 7, "L,D,W,D,D"),
+  r("POL", 7, 1, 4, 2, 7, 8, 7, "D,D,L,W,D"),
+  r("GAL", 7, 1, 3, 3, 7, 9, 6, "L,W,D,L,D"),
+  r("MAR", 7, 0, 4, 3, 5, 8, 4, "D,L,D,D,L"),
+  r("RIC", 7, 0, 3, 4, 5, 12, 3, "L,D,L,D,L"),
+  r("SIW", 7, 0, 3, 4, 5, 12, 3, "L,L,D,L,D"),
+  r("KRU", 7, 0, 1, 6, 2, 11, 1, "L,L,L,L,D"),
 ];
 
 export const scorers = [
-  { name: "Junior Dion", team: "ARR", flag: "🇹🇩", goals: 10, assists: 3, apps: 17 },
-  { name: "Iqraam Rayners", team: "SUN", flag: "🇿🇦", goals: 9, assists: 4, apps: 15 },
-  { name: "Bradley Grobler", team: "SEK", flag: "🇿🇦", goals: 8, assists: 2, apps: 18 },
-  { name: "Langelihle Phili", team: "STE", flag: "🇿🇦", goals: 7, assists: 5, apps: 15 },
-  { name: "Relebohile Mofokeng", team: "ORL", flag: "🇿🇦", goals: 7, assists: 6, apps: 13 },
-  { name: "Glody Lilepo", team: "SUN", flag: "🇨🇩", goals: 6, assists: 4, apps: 14 },
-  { name: "Bongokuhle Hlongwane", team: "KAI", flag: "🇿🇦", goals: 5, assists: 3, apps: 14 },
-  { name: "Tashreeq Morris", team: "AMA", flag: "🇿🇦", goals: 5, assists: 2, apps: 15 },
-  { name: "Thembinkosi Lorch", team: "ORL", flag: "🇿🇦", goals: 4, assists: 7, apps: 13 },
-  { name: "Miguel Cardoso", team: "SUN", flag: "🇵🇹", goals: 4, assists: 5, apps: 13 },
+  { name: "Thandolwenkosi Ngwenya", team: "AMA", flag: "🇿🇼", goals: 6, assists: 2, apps: 7 },
+  { name: "Victor Letsoalo", team: "GAL", flag: "🇿🇦", goals: 4, assists: 1, apps: 7 },
+  { name: "Wandile Duba", team: "KAI", flag: "🇿🇦", goals: 3, assists: 2, apps: 7 },
+  { name: "Brayan León", team: "SUN", flag: "🇨🇴", goals: 3, assists: 4, apps: 8 },
+  { name: "Quwan Plaatjies", team: "STE", flag: "🇿🇦", goals: 3, assists: 1, apps: 7 },
+  { name: "Nqaba Xulu", team: "RIC", flag: "🇿🇦", goals: 3, assists: 0, apps: 7 },
+  { name: "Oswin Appollis", team: "ORL", flag: "🇿🇦", goals: 2, assists: 3, apps: 7 },
+  { name: "Tshepang Moremi", team: "ORL", flag: "🇿🇦", goals: 2, assists: 2, apps: 7 },
+  { name: "Teboho Mokoena", team: "SUN", flag: "🇿🇦", goals: 2, assists: 5, apps: 8 },
+  { name: "Cassius Mailula", team: "SUN", flag: "🇿🇦", goals: 2, assists: 3, apps: 8 },
 ];
 
 export type MatchEvent = { icon: string; player: string; min: number; side: "home" | "away" };
@@ -67,68 +68,86 @@ export type Match = {
   date?: string; time?: string; derby?: string; events?: MatchEvent[]; stats?: Stats;
 };
 
+// Live matches are simulated (GW9 fixtures shown in progress).
 export const matches: Match[] = [
   {
-    id: "orl-kai", status: "live", home: "ORL", away: "KAI", hs: 2, as: 1, ht: "2–0", minute: 67,
-    venue: "Orlando Stadium", tv: "SuperSport 2", derby: "SOWETO DERBY",
+    id: "kai-ste", status: "live", home: "KAI", away: "STE", hs: 1, as: 0, ht: "1–0", minute: 58,
+    venue: "FNB Stadium", tv: "SuperSport PSL",
     events: [
-      { icon: "⚽", player: "Mofokeng", min: 23, side: "home" },
-      { icon: "⚽", player: "Mofokeng", min: 45, side: "home" },
-      { icon: "⚽", player: "Hlongwane", min: 52, side: "away" },
-      { icon: "🟨", player: "Hlanti", min: 61, side: "away" },
+      { icon: "⚽", player: "Duba", min: 31, side: "home" },
+      { icon: "🟨", player: "Plaatjies", min: 44, side: "away" },
+      { icon: "🔄", player: "Shabalala", min: 55, side: "home" },
     ],
-    stats: { possession: [54, 46], shots: [9, 6], sot: [5, 3], corners: [5, 3], fouls: [8, 11], yellows: [0, 1] },
+    stats: { possession: [57, 43], shots: [10, 5], sot: [4, 2], corners: [6, 2], fouls: [9, 12], yellows: [0, 1] },
   },
   {
-    id: "sun-sek", status: "live", home: "SUN", away: "SEK", hs: 2, as: 0, ht: "—", minute: 34,
-    venue: "Loftus Versfeld", tv: "SuperSport 4",
+    id: "ric-sun", status: "live", home: "RIC", away: "SUN", hs: 0, as: 2, ht: "0–1", minute: 63,
+    venue: "Princess Magogo Stadium", tv: "SuperSport Variety 1",
     events: [
-      { icon: "⚽", player: "Rayners", min: 12, side: "home" },
-      { icon: "🟨", player: "Grobler", min: 21, side: "away" },
-      { icon: "⚽", player: "Lilepo", min: 29, side: "home" },
+      { icon: "⚽", player: "León", min: 19, side: "away" },
+      { icon: "🟨", player: "Xulu", min: 37, side: "home" },
+      { icon: "⚽", player: "Mailula", min: 52, side: "away" },
     ],
-    stats: { possession: [62, 38], shots: [11, 4], sot: [6, 1], corners: [7, 2], fouls: [6, 9], yellows: [0, 1] },
+    stats: { possession: [34, 66], shots: [4, 13], sot: [1, 6], corners: [2, 8], fouls: [13, 7], yellows: [1, 0] },
   },
-  { id: "ama-arr", status: "upcoming", home: "AMA", away: "ARR", date: "Sat 15 Mar", time: "15:00", venue: "Moses Mabhida Stadium", tv: "SuperSport 3", derby: "DURBAN DERBY" },
-  { id: "dur-ste", status: "upcoming", home: "DUR", away: "STE", date: "Sat 15 Mar", time: "17:30", venue: "Princess Magogo Stadium", tv: "SuperSport 2" },
-  { id: "pol-tsg", status: "upcoming", home: "POL", away: "TSG", date: "Sun 16 Mar", time: "15:00", venue: "Peter Mokaba Stadium", tv: "SuperSport 4" },
-  { id: "rby-chi", status: "upcoming", home: "RBY", away: "CHI", date: "Sun 16 Mar", time: "17:30", venue: "uMhlathuze Sports Complex", tv: "SuperSport 3" },
-  { id: "sun-sek-ft", status: "ft", home: "SUN", away: "SEK", hs: 3, as: 1, date: "Sat 1 Mar", venue: "Loftus Versfeld", events: [], stats: { possession: [60, 40], shots: [14, 6], sot: [7, 2], corners: [6, 3], fouls: [9, 12], yellows: [1, 2] } },
-  { id: "rby-kai-ft", status: "ft", home: "RBY", away: "KAI", hs: 1, as: 0, date: "Sat 1 Mar", venue: "uMhlathuze Sports Complex", events: [], stats: { possession: [41, 59], shots: [7, 10], sot: [3, 2], corners: [2, 6], fouls: [13, 9], yellows: [3, 1] } },
-  { id: "mag-arr-ft", status: "ft", home: "MAG", away: "ARR", hs: 2, as: 1, date: "Sun 2 Mar", venue: "Old Peter Mokaba Stadium", events: [{ icon: "⚽", player: "Dion", min: 88, side: "away" }], stats: { possession: [47, 53], shots: [8, 9], sot: [4, 3], corners: [4, 5], fouls: [10, 10], yellows: [2, 2] } },
-  { id: "siw-ste-ft", status: "ft", home: "SIW", away: "STE", hs: 0, as: 0, date: "Sun 2 Mar", venue: "Dr Molemela Stadium", events: [], stats: { possession: [50, 50], shots: [5, 6], sot: [1, 2], corners: [3, 4], fouls: [11, 12], yellows: [2, 1] } },
+  { id: "dur-ama", status: "upcoming", home: "DUR", away: "AMA", date: "Mon 13 Oct", time: "19:30", venue: "Chatsworth Stadium", tv: "SuperSport PSL", derby: "DURBAN DERBY" },
+  { id: "orl-gal", status: "upcoming", home: "ORL", away: "GAL", date: "Mon 13 Oct", time: "19:30", venue: "Orlando Amstel Arena", tv: "SuperSport PSL" },
+  { id: "chi-kru", status: "upcoming", home: "CHI", away: "KRU", date: "Fri 17 Oct", time: "15:30", venue: "Buffalo City Stadium", tv: "SuperSport PSL" },
+  { id: "arr-mil", status: "upcoming", home: "ARR", away: "MIL", date: "Fri 17 Oct", time: "15:30", venue: "King Goodwill Zwelithini Stadium", tv: "SuperSport PSL" },
+  { id: "sek-mar", status: "upcoming", home: "SEK", away: "MAR", date: "Fri 17 Oct", time: "18:00", venue: "Peter Mokaba Stadium", tv: "SuperSport PSL" },
+  { id: "siw-pol", status: "upcoming", home: "SIW", away: "POL", date: "Sat 18 Oct", time: "15:30", venue: "Dr Molemela Stadium", tv: "SuperSport PSL" },
+  { id: "arr-kai-ft", status: "ft", home: "ARR", away: "KAI", hs: 0, as: 0, date: "20 Sep 2026", venue: "Mbombela Stadium", events: [] },
+  { id: "chi-gal-ft", status: "ft", home: "CHI", away: "GAL", hs: 1, as: 0, date: "20 Sep 2026", venue: "Solomon Mahlangu Stadium", events: [{ icon: "⚽", player: "Majadibodu", min: 0, side: "home" }] },
+  { id: "mil-ric-ft", status: "ft", home: "MIL", away: "RIC", hs: 5, as: 1, date: "13 Sep 2026", venue: "Sugar Ray Xulu Stadium", events: [] },
+  { id: "sun-siw-ft", status: "ft", home: "SUN", away: "SIW", hs: 3, as: 0, date: "09 Sep 2026", venue: "Loftus Versfeld", events: [] },
+  { id: "arr-sun-ft", status: "ft", home: "ARR", away: "SUN", hs: 1, as: 2, date: "06 Sep 2026", venue: "King Goodwill Zwelithini Stadium", events: [] },
+  { id: "chi-mil-ft", status: "ft", home: "CHI", away: "MIL", hs: 0, as: 0, date: "05 Sep 2026", venue: "Buffalo City Stadium", events: [] },
+  { id: "kru-dur-ft", status: "ft", home: "KRU", away: "DUR", hs: 0, as: 2, date: "25 Aug 2026", venue: "Mbombela Stadium", events: [] },
 ];
 
 export type Article = { id: string; title: string; cat: string; author: string; ago: string; hot?: boolean; emoji: string; summary: string };
 export const news: Article[] = [
-  { id: "1", title: "How Pirates defied the odds to reach the top: an inside story", cat: "Feature", author: "Ntombizodwa Dlamini", ago: "2h ago", emoji: "🏴‍☠️", summary: "From a turbulent pre-season to the summit of the Betway Premiership — the players and staff reveal how the Buccaneers rebuilt their belief." },
-  { id: "2", title: "Sundowns target Nigerian striker in R15M deal — sources", cat: "Transfer", hot: true, author: "Thabo Mokoena", ago: "3h ago", emoji: "💰", summary: "Masandawana are preparing a big-money move to bolster their attack ahead of the CAF Champions League knockouts." },
-  { id: "3", title: "Pirates edge Chiefs in Soweto Derby classic — match report", cat: "Match Report", author: "Sipho Nkosi", ago: "5h ago", emoji: "⚽", summary: "A Mofokeng brace settled a pulsating derby at Orlando Stadium." },
-  { id: "4", title: "Iqraam Rayners doubtful for Sundowns' CAF clash after training knock", cat: "Injury", author: "Lerato Molefe", ago: "8h ago", emoji: "🩹", summary: "The in-form striker is being assessed by the medical team." },
-  { id: "5", title: "Price changes: 3 key players to buy before Gameweek 22", cat: "Fantasy", hot: true, author: "PSL Fantasy Team", ago: "12h ago", emoji: "📈", summary: "Get ahead of the market with these rising assets." },
-  { id: "6", title: "Mofokeng named Betway Premiership Player of the Month for February", cat: "Awards", author: "PSL Media", ago: "1d ago", emoji: "🏅", summary: "The Pirates winger caps a brilliant month with the individual honour." },
-  { id: "7", title: "Kaizer Chiefs' third straight defeat deepens crisis at Naturena", cat: "Match Report", author: "Sipho Nkosi", ago: "1d ago", emoji: "📉", summary: "Amakhosi supporters are growing restless after another loss." },
-  { id: "8", title: "Bradley Grobler at 38: the veteran striker defying Father Time", cat: "Interview", author: "Zanele Khumalo", ago: "2d ago", emoji: "🎙️", summary: "Sekhukhune's evergreen forward on longevity, hunger and goals." },
-  { id: "9", title: "Orbit College stun TS Galaxy to hand Rockets fifth straight defeat", cat: "Match Report", hot: true, author: "Sipho Nkosi", ago: "2d ago", emoji: "😱", summary: "The newcomers pulled off the shock of the weekend." },
-  { id: "10", title: "PSL announces bumper fixture list for Easter weekend", cat: "News", author: "PSL Media", ago: "3d ago", emoji: "📅", summary: "A packed schedule awaits fans over the long weekend." },
+  { id: "1", title: "MTN8 final tickets sold out — Pirates vs Sundowns at Moses Mabhida", cat: "News", hot: true, author: "PSL Media", ago: "02 Oct 2026", emoji: "🎟️", summary: "Every seat at Moses Mabhida Stadium has been snapped up for the season's first cup final between the two giants of South African football." },
+  { id: "2", title: "Bafana Bafana thump Eritrea 5-0 for second AFCON qualifier win", cat: "News", author: "PSL Media", ago: "01 Oct 2026", emoji: "🇿🇦", summary: "A commanding display keeps Bafana on course for AFCON qualification." },
+  { id: "3", title: "Durban City's Nedbank Cup triumph creates lasting sporting legacy for Chatsworth learners", cat: "Feature", author: "PSL Media", ago: "30 Sep 2026", emoji: "🏆", summary: "The cup run is changing lives in the community around Chatsworth Stadium." },
+  { id: "4", title: "PSL confirms venue and ticketing details for 2026 MTN8 Final at Moses Mabhida", cat: "News", author: "PSL Media", ago: "28 Sep 2026", emoji: "📍", summary: "All the information supporters need ahead of the final in Durban." },
+  { id: "5", title: "Majadibodu strike lifts Chippa United as TS Galaxy slump to defeat", cat: "Match Report", author: "PSL Media", ago: "20 Sep 2026", emoji: "⚽", summary: "A single goal settled it at Solomon Mahlangu Stadium." },
+  { id: "6", title: "Ngwenya wins Player of the Month, Ouaddou Coach of the Month — August awards", cat: "Awards", hot: true, author: "PSL Media", ago: "08 Sep 2026", emoji: "🏅", summary: "AmaZulu's Zimbabwean striker and the Pirates coach scoop August's honours." },
+  { id: "7", title: "Milford FC shock Richards Bay 5-1 in the result of the season so far", cat: "Match Report", hot: true, author: "PSL Media", ago: "13 Sep 2026", emoji: "😱", summary: "The newly promoted side ran riot at Sugar Ray Xulu Stadium." },
+  { id: "8", title: "Brayan León wins Goal of the Month for stunning volley against AmaZulu", cat: "Awards", author: "PSL Media", ago: "08 Sep 2026", emoji: "🎯", summary: "The Colombian's strike was voted August's best." },
+  { id: "9", title: "Ouaddou: Pirates will be hungrier than ever to defend the title", cat: "Interview", author: "PSL Media", ago: "Sep 2026", emoji: "🎙️", summary: "The champions' coach on the challenge of going back-to-back." },
+  { id: "10", title: "PSL 2026/27 season preview: 16 teams, 2 new faces, one trophy", cat: "Feature", author: "PSL Media", ago: "Jul 2026", emoji: "📋", summary: "Kruger United and Milford FC join the Betway Premiership." },
 ];
 
 export const catColor: Record<string, string> = {
   Feature: "bg-orange/20 text-orange", Transfer: "bg-gold/20 text-gold", "Match Report": "bg-info/20 text-info",
-  Injury: "bg-live/20 text-live", Fantasy: "bg-fantasy/20 text-fantasy", Awards: "bg-amber/20 text-amber",
-  Interview: "bg-primary/20 text-primary", News: "bg-muted text-muted-foreground",
+  Injury: "bg-live/20 text-live", Fantasy: "bg-fantasy/20 text-fantasy", Awards: "bg-gold/20 text-gold",
+  Interview: "bg-success/20 text-success", News: "bg-primary/20 text-primary",
 };
 
 export type Pos = "GK" | "DEF" | "MID" | "FWD";
+const fp = (name: string, pos: Pos, team: string, price: number, gw: number, total: number, own: number, form: number, next: string, diff: string) =>
+  ({ name, pos, team, price, gw, total, own, form, next, diff });
 export const fantasy = [
-  { name: "Ronwen Williams", pos: "GK" as Pos, team: "SUN", price: 6.0, total: 112, gw: 9, own: 44.2, form: 7.2, next: "SEK (H)", diff: "Easy" },
-  { name: "Iqraam Rayners", pos: "FWD" as Pos, team: "SUN", price: 10.5, total: 134, gw: 11, own: 57.8, form: 8.6, next: "SEK (H)", diff: "Easy" },
-  { name: "Relebohile Mofokeng", pos: "MID" as Pos, team: "ORL", price: 9.8, total: 127, gw: 14, own: 53.6, form: 9.2, next: "POL (A)", diff: "Easy" },
-  { name: "Thembinkosi Lorch", pos: "MID" as Pos, team: "ORL", price: 9.0, total: 112, gw: 8, own: 41.3, form: 7.8, next: "POL (A)", diff: "Easy" },
-  { name: "Junior Dion", pos: "FWD" as Pos, team: "ARR", price: 8.5, total: 118, gw: 10, own: 45.9, form: 9.0, next: "AMA (A)", diff: "Hard" },
-  { name: "Glody Lilepo", pos: "FWD" as Pos, team: "SUN", price: 8.0, total: 104, gw: 6, own: 34.7, form: 6.8, next: "SEK (H)", diff: "Easy" },
-  { name: "Bradley Grobler", pos: "FWD" as Pos, team: "SEK", price: 6.5, total: 96, gw: 7, own: 28.4, form: 6.4, next: "SUN (A)", diff: "Hard" },
-  { name: "Bongokuhle Hlongwane", pos: "FWD" as Pos, team: "KAI", price: 8.2, total: 88, gw: 5, own: 31.0, form: 5.8, next: "ORL (A)", diff: "Hard" },
-  { name: "Sifiso Hlanti", pos: "DEF" as Pos, team: "KAI", price: 6.8, total: 88, gw: 3, own: 22.1, form: 4.2, next: "ORL (A)", diff: "Hard" },
-  { name: "Langelihle Phili", pos: "MID" as Pos, team: "STE", price: 7.0, total: 88, gw: 6, own: 22.4, form: 6.0, next: "SIW (A)", diff: "Medium" },
+  fp("Thandolwenkosi Ngwenya", "FWD", "AMA", 9.5, 14, 96, 61.2, 9.4, "DUR (H) Derby", "Hard"),
+  fp("Brayan León", "FWD", "SUN", 10.2, 11, 88, 54.7, 8.8, "RIC (A)", "Easy"),
+  fp("Oswin Appollis", "MID", "ORL", 9.8, 9, 84, 52.1, 8.6, "GAL (H)", "Easy"),
+  fp("Teboho Mokoena", "MID", "SUN", 9.0, 8, 80, 48.3, 7.8, "RIC (A)", "Easy"),
+  fp("Cassius Mailula", "FWD", "SUN", 8.8, 8, 76, 44.5, 7.4, "RIC (A)", "Easy"),
+  fp("Wandile Duba", "FWD", "KAI", 8.5, 10, 74, 42.1, 8.2, "STE (H)", "Medium"),
+  fp("Victor Letsoalo", "FWD", "GAL", 8.2, 7, 68, 36.4, 6.8, "ORL (A)", "Hard"),
+  fp("Tshepang Moremi", "FWD", "ORL", 7.8, 6, 62, 31.7, 6.4, "GAL (H)", "Easy"),
+  fp("Quwan Plaatjies", "MID", "STE", 7.5, 8, 60, 28.9, 7.0, "KAI (A)", "Hard"),
+  fp("Ghampani Lungu", "MID", "ORL", 7.2, 5, 56, 24.6, 5.8, "GAL (H)", "Easy"),
+  fp("Mduduzi Shabalala", "FWD", "KAI", 7.0, 7, 54, 22.3, 6.6, "STE (H)", "Medium"),
+  fp("Tashreeq Matthews", "MID", "SUN", 7.0, 6, 52, 20.8, 5.6, "RIC (A)", "Easy"),
+];
+
+const S = (f: string) => `https://awesslegacycontent.blob.core.windows.net/newpsl/images/sponsors/${f}`;
+export const sponsors = [
+  { name: "Betway", role: "Title Sponsor — Betway Premiership", logo: S("betway-premiership-sponsor.jpg"), href: "https://www.betway.co.za", gambling: true },
+  { name: "Nedbank", role: "Nedbank Cup", logo: S("nedbank.png"), href: "https://www.nedbank.co.za" },
+  { name: "MTN", role: "MTN8", logo: S("mtn.png"), href: "https://www.mtn.co.za" },
+  { name: "Carling Black Label", role: "Carling Knockout Cup", logo: S("Carling.PNG"), href: "https://www.carlingblacklabel.co.za" },
+  { name: "DStv", role: "Diski Challenge, Compact Cup", logo: "", href: "https://www.dstv.com" },
 ];

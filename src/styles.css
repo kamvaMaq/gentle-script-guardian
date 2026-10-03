@@ -37,31 +37,34 @@
   --color-info: var(--info);
   --color-orange: var(--orange);
   --color-pitch: var(--pitch);
+  --color-success: var(--success);
+  --color-ticker: var(--ticker);
+  --color-surface: var(--surface);
   --font-display: "Barlow Condensed", sans-serif;
   --font-sans: "Barlow", sans-serif;
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.13 0.008 285);
+  --background: oklch(0 0 0);
   --foreground: oklch(0.97 0 0);
-  --card: oklch(0.16 0.01 285);
+  --card: oklch(0.18 0 0);
   --card-foreground: oklch(0.97 0 0);
-  --popover: oklch(0.16 0.01 285);
+  --popover: oklch(0.18 0 0);
   --popover-foreground: oklch(0.97 0 0);
-  --primary: oklch(0.7 0.18 150);
-  --primary-foreground: oklch(0.13 0.008 285);
-  --secondary: oklch(0.21 0.01 285);
+  --primary: oklch(0.53 0.22 29);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.22 0 0);
   --secondary-foreground: oklch(0.97 0 0);
-  --muted: oklch(0.21 0.01 285);
-  --muted-foreground: oklch(0.65 0.01 285);
-  --accent: oklch(0.24 0.01 285);
+  --muted: oklch(0.22 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.25 0 0);
   --accent-foreground: oklch(0.97 0 0);
   --destructive: oklch(0.64 0.21 25);
   --destructive-foreground: oklch(0.97 0 0);
   --border: oklch(1 0 0 / 7%);
   --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.7 0.18 150);
+  --ring: oklch(0.53 0.22 29);
   --live: oklch(0.64 0.21 25);
   --gold: oklch(0.89 0.18 95);
   --silver: oklch(0.8 0.01 260);
@@ -71,12 +74,15 @@
   --info: oklch(0.62 0.19 255);
   --orange: oklch(0.72 0.18 50);
   --pitch: oklch(0.45 0.12 150);
+  --success: oklch(0.72 0.19 150);
+  --ticker: oklch(0.28 0.07 155);
+  --surface: oklch(0.13 0 0);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   body {
-    background-color: oklch(0.08 0.005 285);
+    background-color: oklch(0.1 0 0);
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
@@ -108,11 +114,16 @@
 }
 
 @utility bg-derby {
-  background: linear-gradient(135deg, oklch(0.45 0.18 25), oklch(0.25 0.1 20));
+  background: linear-gradient(135deg, oklch(0.53 0.22 29), oklch(0.22 0.08 25));
+  animation: banner-glow 2.4s ease-in-out infinite;
 }
 
 @utility bg-fantasy-header {
-  background: linear-gradient(135deg, oklch(0.45 0.22 305), oklch(0.25 0.12 290));
+  background: linear-gradient(135deg, oklch(0.4 0.18 29), oklch(0.15 0 0));
+}
+
+@utility rainbow-bar {
+  background: linear-gradient(90deg, oklch(0.45 0.16 255) 0 25%, oklch(0.5 0.13 155) 25% 50%, oklch(0.89 0.18 95) 50% 75%, oklch(0.53 0.22 29) 75%);
 }
 
 @utility bg-pitch {
@@ -126,6 +137,11 @@
 @keyframes pulse-live {
   0%, 100% { opacity: 1; box-shadow: 0 0 0 0 oklch(0.64 0.21 25 / 70%); }
   50% { opacity: 0.6; box-shadow: 0 0 0 5px oklch(0.64 0.21 25 / 0%); }
+}
+
+@keyframes banner-glow {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.53 0.22 29 / 50%); }
+  50% { box-shadow: 0 0 22px 2px oklch(0.53 0.22 29 / 45%); }
 }
 
 @keyframes ticker {
