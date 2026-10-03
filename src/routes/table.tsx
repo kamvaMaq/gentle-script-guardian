@@ -27,7 +27,7 @@ function TableTab() {
     <div className="p-4">
       <div className="mb-4 flex items-end justify-between">
         <h1 className="font-display text-2xl font-black uppercase">2025/26 Standings</h1>
-        <span className="text-xs text-muted-foreground">Updated 4 Mar 2026</span>
+        <span className="text-xs text-muted-foreground">Updated Oct 2026</span>
       </div>
       <div className="mb-4 grid grid-cols-4 gap-1 rounded-xl bg-card p-1">
         {tabs.map((t) => <button key={t} onClick={() => setTab(t)} className={cn("rounded-lg py-2 font-display text-sm font-bold", tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground")}>{t}</button>)}
@@ -42,7 +42,7 @@ function TableTab() {
           <tbody>
             {rows.map((r) => {
               const pos = standings.indexOf(r) + 1;
-              const zone = pos <= 2 ? "border-l-primary bg-primary/10" : pos === 3 ? "border-l-info bg-info/10" : pos >= 15 ? "border-l-live bg-live/10" : "border-l-transparent";
+              const zone = pos <= 2 ? "border-l-success bg-success/10" : pos === 3 ? "border-l-info bg-info/10" : pos >= 15 ? "border-l-primary bg-primary/10" : "border-l-transparent";
               const gd = r.gf - r.ga;
               return (
                 <tr key={r.team} className={cn("border-l-4 border-t [&>td]:px-1.5 [&>td]:py-2 [&>td]:text-center", zone)}>
@@ -51,7 +51,7 @@ function TableTab() {
                   <td>{r.p}</td><td>{r.w}</td><td>{r.d}</td><td>{r.l}</td><td>{r.gf}</td><td>{r.ga}</td>
                   <td>{gd > 0 ? "+" : ""}{gd}</td>
                   <td><span className="flex justify-center gap-0.5">{r.form.map((f, i) => <FormDot key={i} r={f} />)}</span></td>
-                  <td className={cn("font-display text-sm font-black", pos <= 2 && "text-primary")}>{r.pts}</td>
+                  <td className={cn("font-display text-sm font-black", pos <= 2 && "text-success")}>{r.pts}</td>
                 </tr>
               );
             })}
@@ -59,9 +59,9 @@ function TableTab() {
         </table>
       </div>
       <div className="mt-4 space-y-1.5 text-xs text-muted-foreground">
-        <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-primary" /> CAF Champions League</div>
+        <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-success" /> CAF Champions League</div>
         <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-info" /> CAF Confederation Cup</div>
-        <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-live" /> Relegation</div>
+        <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-primary" /> Relegation play-offs</div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { matches, teams, type Match, type Res, type Stats } from "@/lib/data";
+import logoAsset from "@/assets/betway-premiership-logo.webp.asset.json";
+import { SEASON, matches, sponsors, teams, type Match, type Res, type Stats } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export function useLiveMinute(base = 0) {
@@ -79,10 +80,10 @@ export function StatBar({ label, home, away, suffix = "" }: { label: string; hom
       </div>
       <div className="flex h-1.5 gap-1">
         <div className="flex flex-1 justify-end overflow-hidden rounded-full bg-muted">
-          <div className="h-full rounded-full bg-primary transition-all duration-1000 ease-out" style={{ width: on ? `${(home / total) * 100}%` : 0 }} />
+          <div className="h-full rounded-full bg-success transition-all duration-1000 ease-out" style={{ width: on ? `${(home / total) * 100}%` : 0 }} />
         </div>
         <div className="flex-1 overflow-hidden rounded-full bg-muted">
-          <div className="h-full rounded-full bg-live transition-all duration-1000 ease-out" style={{ width: on ? `${(away / total) * 100}%` : 0 }} />
+          <div className="h-full rounded-full bg-muted-foreground transition-all duration-1000 ease-out" style={{ width: on ? `${(away / total) * 100}%` : 0 }} />
         </div>
       </div>
     </div>
@@ -177,10 +178,10 @@ export function UpcomingCard({ match, expanded }: { match: Match; expanded?: boo
       </div>
       {expanded && (
         <div className="mt-3 grid grid-cols-2 gap-2">
-          <button onClick={() => setRemind(true)} className={cn("rounded-lg border py-2 font-display text-sm font-bold uppercase", remind ? "border-primary bg-primary/15 text-primary" : "hover:bg-accent")}>
+          <button onClick={() => setRemind(true)} className={cn("rounded-lg border py-2 font-display text-sm font-bold uppercase", remind ? "border-success bg-success/15 text-success" : "hover:bg-accent")}>
             {remind ? "✓ Reminder Set" : "🔔 Remind Me"}
           </button>
-          <button onClick={() => setCal(true)} className={cn("rounded-lg border py-2 font-display text-sm font-bold uppercase", cal ? "border-primary bg-primary/15 text-primary" : "hover:bg-accent")}>
+          <button onClick={() => setCal(true)} className={cn("rounded-lg border py-2 font-display text-sm font-bold uppercase", cal ? "border-success bg-success/15 text-success" : "hover:bg-accent")}>
             {cal ? "✓ Added" : "📅 Add to Calendar"}
           </button>
         </div>
@@ -189,32 +190,29 @@ export function UpcomingCard({ match, expanded }: { match: Match; expanded?: boo
   );
 }
 
-function LeagueLogo() {
-  const [err, setErr] = useState(false);
-  if (err) return <span className="font-display text-lg font-black text-primary">PSL</span>;
-  return <img src="https://tmssl.akamaized.net/images/wappen/big/sfa1.png" alt="Betway Premiership" className="h-8 w-8 object-contain" onError={() => setErr(true)} />;
-}
-
 export function Header() {
   const live = matches.filter((m) => m.status === "live");
-  const items = [...live.map((m) => `🔴 ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short} ${m.minute}'`),
-    ...matches.filter((m) => m.status === "ft").map((m) => `FT ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short}`)];
+  const items = [
+    ...live.map((m) => `🔴 ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short} ${m.minute}'`),
+    ...matches.filter((m) => m.status === "upcoming").map((m) => `${teams[m.home]!.short} v ${teams[m.away]!.short} · ${m.date} ${m.time}`),
+  ];
   return (
-    <header className="sticky top-0 z-30 border-b bg-background/95 backdrop-blur">
-      <div className="flex items-center justify-between px-4 py-2.5">
+    <header className="sticky top-0 z-30 border-b-2 border-primary bg-background">
+      <div className="flex items-center justify-between gap-2 px-3 py-2">
         <Link to="/" className="flex items-center gap-2">
-          <LeagueLogo />
+          <img src={logoAsset.url} alt="Betway Premiership" className="h-9 w-auto rounded-sm bg-foreground object-contain px-1" />
           <div className="leading-none">
-            <div className="font-display text-lg font-black uppercase tracking-wide">Betway Premiership</div>
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Official App</div>
+            <div className="font-display text-base font-black uppercase tracking-wide">Betway Premiership</div>
+            <div className="font-display text-sm font-bold text-primary">{SEASON}</div>
           </div>
         </Link>
-        <div className="flex gap-2 text-lg">
-          <button aria-label="Search" className="rounded-full p-1.5 hover:bg-accent">🔍</button>
-          <button aria-label="Notifications" className="rounded-full p-1.5 hover:bg-accent">🔔</button>
+        <div className="flex items-center gap-1.5">
+          <button aria-label="Notifications" className="rounded-full p-1.5 text-lg hover:bg-accent">🔔</button>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary font-display text-sm font-bold">KM</span>
+          <Link to="/more" aria-label="More" className="rounded-full p-1.5 text-xl hover:bg-accent">☰</Link>
         </div>
       </div>
-      <div className="overflow-hidden border-t bg-card py-1.5">
+      <div className="overflow-hidden bg-ticker py-1.5">
         <div className="ticker-track flex gap-8 whitespace-nowrap font-display text-sm font-bold">
           {[...items, ...items].map((t, i) => <span key={i}>{t}</span>)}
         </div>
@@ -222,6 +220,30 @@ export function Header() {
     </header>
   );
 }
+
+function SponsorTile({ s }: { s: (typeof sponsors)[number] }) {
+  const [err, setErr] = useState(!s.logo);
+  return (
+    <a href={s.href} target="_blank" rel="noreferrer" className="flex h-16 w-32 shrink-0 items-center justify-center rounded-lg bg-foreground p-2">
+      {err ? <span className="font-display text-lg font-black text-background">{s.name}</span>
+        : <img src={s.logo} alt={s.name} loading="lazy" onError={() => setErr(true)} className="max-h-full max-w-full object-contain" />}
+    </a>
+  );
+}
+
+export function SponsorsStrip() {
+  return (
+    <section className="-mx-4 bg-surface px-4 py-5">
+      <h2 className="mb-3 font-display text-lg font-extrabold uppercase tracking-wide text-primary">Official Partners</h2>
+      <div className="no-scrollbar flex gap-3 overflow-x-auto">
+        {sponsors.map((s) => <SponsorTile key={s.name} s={s} />)}
+      </div>
+      <p className="mt-3 text-[11px] text-muted-foreground">Betway: Responsible Gambling — 18+ only. Gamble responsibly.</p>
+    </section>
+  );
+}
+
+export { SponsorTile };
 
 const tabs = [
   { to: "/", label: "Home", icon: "⚽" },
@@ -233,7 +255,7 @@ const tabs = [
 
 export function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-[430px] -translate-x-1/2 grid-cols-5 border-t bg-background/95 backdrop-blur">
+    <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-[430px] -translate-x-1/2 grid-cols-5 border-t-2 border-primary bg-background">
       {tabs.map((t) => (
         <Link
           key={t.to}
