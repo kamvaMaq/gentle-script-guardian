@@ -63,7 +63,7 @@ export function SectionTitle({ children, live }: { children: React.ReactNode; li
   );
 }
 
-export function StatBar({ label, home, away, suffix = "" }: { label: string; home: number; away: number; suffix?: string }) {
+export function StatBar({ label, home, away, suffix = "" }: { label: string; home: number; away: number; suffix?: string | undefined }) {
   const [on, setOn] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setOn(true), 60);

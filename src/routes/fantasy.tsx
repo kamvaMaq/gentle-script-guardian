@@ -103,7 +103,7 @@ function FantasyTab() {
         <SectionTitle>Scoring System</SectionTitle>
         <div className="grid grid-cols-2 gap-2">
           {rules.map(([l, v]) => {
-            const neg = v.startsWith("-");
+            const neg = v!.startsWith("-");
             return (
               <div key={l} className={cn("flex items-center justify-between rounded-lg border px-3 py-2 text-xs", neg ? "bg-live/10" : "bg-card")}>
                 <span>{l}</span><span className={cn("font-display text-sm font-black", neg ? "text-live" : "text-primary")}>{v}</span>
