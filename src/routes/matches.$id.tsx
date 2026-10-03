@@ -20,7 +20,7 @@ export const Route = createFileRoute("/matches/$id")({
 
 function MatchDetail() {
   const { match: m } = Route.useLoaderData();
-  const h = teams[m.home], a = teams[m.away]!;
+  const h = teams[m.home]!, a = teams[m.away]!;
   const minute = useLiveMinute(m.minute ?? 0);
   const hs = m.hs ?? 0, as = m.as ?? 0;
   const played = m.status !== "upcoming";
