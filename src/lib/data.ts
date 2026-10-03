@@ -3,7 +3,6 @@ const L = (id: number) => `https://tmssl.akamaized.net/images/wappen/big/${id}.p
 export type Res = "W" | "D" | "L";
 export type Team = { key: string; name: string; short: string; logo: string; color: string };
 
-export const LEAGUE_LOGO = L(0).replace("0.png", "sfa1.png");
 
 export const teams: Record<string, Team> = {
   SUN: { key: "SUN", name: "Mamelodi Sundowns", short: "SUN", logo: L(6356), color: "#FFD700" },
