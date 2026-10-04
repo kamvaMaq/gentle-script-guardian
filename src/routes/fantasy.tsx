@@ -6,24 +6,25 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/fantasy")({
   head: () => ({
     meta: [
-      { title: "Fantasy PSL — Gameweek 21" },
+      { title: "Fantasy Premiership — GW8" },
       { name: "description", content: "Pick your Fantasy PSL squad, track top picks and learn the scoring system." },
-      { property: "og:title", content: "Fantasy PSL — Gameweek 21" },
+      { property: "og:title", content: "Fantasy Premiership — GW8" },
       { property: "og:description", content: "Build your Betway Premiership fantasy team." },
     ],
   }),
   component: FantasyTab,
 });
 
-const posChip: Record<Pos, string> = { GK: "bg-orange/20 text-orange", DEF: "bg-primary/20 text-primary", MID: "bg-info/20 text-info", FWD: "bg-live/20 text-live" };
-const diffColor: Record<string, string> = { Easy: "text-primary", Medium: "text-amber", Hard: "text-live" };
+const posChip: Record<Pos, string> = { GK: "bg-amber/20 text-amber", DEF: "bg-success/20 text-success", MID: "bg-info/20 text-info", FWD: "bg-live/20 text-live" };
+const diffColor: Record<string, string> = { Easy: "text-success", Medium: "text-amber", Hard: "text-live" };
 
 const byName = (n: string) => fantasy.find((p) => p.name === n);
 const lines: { pos: Pos; icon: string; picks: (string | null)[] }[] = [
-  { pos: "FWD", icon: "⚡", picks: ["Iqraam Rayners", "Junior Dion"] },
-  { pos: "MID", icon: "🎯", picks: [null, "Thembinkosi Lorch", "Relebohile Mofokeng", "Langelihle Phili", null] },
-  { pos: "DEF", icon: "🛡️", picks: [null, "Sifiso Hlanti", null] },
-  { pos: "GK", icon: "🧤", picks: ["Ronwen Williams"] },
+  { pos: "FWD", icon: "⚡", picks: ["Thandolwenkosi Ngwenya"] },
+  { pos: "FWD", icon: "⚡", picks: ["Brayan León", "Wandile Duba"] },
+  { pos: "MID", icon: "🎯", picks: [null, "Oswin Appollis", "Teboho Mokoena", "Quwan Plaatjies", null] },
+  { pos: "DEF", icon: "🛡️", picks: [null, null, null] },
+  { pos: "GK", icon: "🧤", picks: [null] },
 ];
 
 const rules = [
@@ -36,9 +37,9 @@ function FantasyTab() {
   return (
     <div className="space-y-6 p-4">
       <div className="bg-fantasy-header rounded-xl p-4">
-        <div className="font-display text-3xl font-black">FANTASY PSL</div>
+        <div className="font-display text-3xl font-black">FANTASY PREMIERSHIP</div>
         <div className="mt-1 flex items-center justify-between text-sm">
-          <div><div className="font-semibold">Gameweek 21</div><div className="text-foreground/70">Deadline: Fri 14 Mar 12:00</div></div>
+          <div><div className="font-semibold">Gameweek 8</div><div className="text-foreground/70">Deadline: Mon 13 Oct 17:30</div></div>
           <div className="text-right"><div className="text-xs text-foreground/70">Budget</div><div className="font-display text-2xl font-black text-primary">R100.0M</div></div>
         </div>
       </div>
@@ -47,8 +48,8 @@ function FantasyTab() {
         <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-foreground/40" />
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/40" />
         <div className="relative space-y-5">
-          {lines.map((l) => (
-            <div key={l.pos} className="flex justify-center gap-2">
+          {lines.map((l, li) => (
+            <div key={li} className="flex justify-center gap-2">
               {l.picks.map((n, i) => {
                 const p = n ? byName(n) : null;
                 return p ? (
@@ -69,7 +70,7 @@ function FantasyTab() {
       </div>
 
       <div className="grid grid-cols-4 gap-2 text-center">
-        {[["GW Points", gw, "text-primary"], ["Total Pts", "847", "text-fantasy"], ["Overall Rank", "12,443", "text-gold"], ["Free Transfers", "1", "text-foreground"]].map(([l, v, c]) => (
+        {[["GW Points", gw, "text-success"], ["Total Pts", "847", "text-primary"], ["Overall Rank", "12,443", "text-gold"], ["Free Transfers", "1", "text-foreground"]].map(([l, v, c]) => (
           <div key={l as string} className="rounded-xl border bg-card px-1 py-2">
             <div className={cn("font-display text-xl font-black", c as string)}>{v}</div>
             <div className="text-[10px] uppercase text-muted-foreground">{l}</div>
