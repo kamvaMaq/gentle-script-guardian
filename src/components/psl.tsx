@@ -4,13 +4,9 @@ import logoAsset from "@/assets/betway-premiership-logo.webp.asset.json";
 import { SEASON, matches, sponsors, teams, type Match, type Res, type Stats } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-export function useLiveMinute(base = 0) {
-  const [m, setM] = useState(base);
-  useEffect(() => {
-    const t = setInterval(() => setM((v) => Math.min(v + 1, 90)), 30000);
-    return () => clearInterval(t);
-  }, []);
-  return m;
+// The match minute must come from the data source; never advance it with a timer.
+export function useLiveMinute(base?: number) {
+  return base;
 }
 
 export function LiveDot() {
@@ -52,6 +48,38 @@ export function FormDot({ r }: { r: Res }) {
         r === "W" ? "bg-primary" : r === "D" ? "bg-amber" : "bg-live",
       )}
     />
+  );
+}
+
+export function NoLiveMatches() {
+  return (
+    <div className="rounded-xl border bg-card p-5 text-center">
+      <div className="text-3xl">⚽</div>
+      <div className="mt-2 font-display text-xl font-black uppercase">No Live Matches</div>
+      <p className="mt-1 text-sm text-muted-foreground">There's no Betway Premiership match currently in progress.</p>
+      <Link to="/matches" className="mt-3 inline-block font-display text-sm font-bold uppercase text-primary">View Upcoming Fixtures →</Link>
+    </div>
+  );
+}
+
+export function NextMatch({ match }: { match: Match }) {
+  const h = teams[match.home]!, a = teams[match.away]!;
+  return (
+    <Link to="/matches/$id" params={{ id: match.id }} className="card-hover block rounded-xl border border-l-4 border-l-primary bg-card p-4">
+      <div className="mb-3 flex items-center justify-between text-xs">
+        <span className="font-display font-bold uppercase tracking-widest text-primary">⏱ Next Match</span>
+        <span className="rounded-full bg-secondary px-2 py-0.5 font-display font-bold uppercase">Upcoming</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="flex w-24 flex-col items-center gap-1 text-center"><TeamLogo team={match.home} size={44} /><span className="text-xs font-semibold">{h.name}</span></div>
+        <div className="text-center">
+          <div className="font-display text-3xl font-black">{match.time}</div>
+          <div className="text-xs text-muted-foreground">{match.date}</div>
+        </div>
+        <div className="flex w-24 flex-col items-center gap-1 text-center"><TeamLogo team={match.away} size={44} /><span className="text-xs font-semibold">{a.name}</span></div>
+      </div>
+      <div className="mt-3 text-center text-xs text-muted-foreground">📍 {match.venue}{match.derby && <span className="font-bold text-primary"> · {match.derby} 🔥</span>}</div>
+    </Link>
   );
 }
 
@@ -101,7 +129,7 @@ export const statRows = (s: Stats) => [
 
 export function LiveMatchCard({ match, expanded }: { match: Match; expanded?: boolean }) {
   const nav = useNavigate();
-  const minute = useLiveMinute(match.minute ?? 0);
+  const minute = useLiveMinute(match.minute);
   const h = teams[match.home]!, a = teams[match.away]!;
   const hs = match.hs ?? 0, as = match.as ?? 0;
   return (
@@ -112,7 +140,7 @@ export function LiveMatchCard({ match, expanded }: { match: Match; expanded?: bo
       <div className="mb-3 flex items-center justify-between text-xs">
         <span className="text-muted-foreground">{match.venue}{match.derby && <span className="ml-1 font-bold text-live"> · {match.derby} 🔥</span>}</span>
         <span className="flex items-center gap-1.5 rounded-full bg-live/15 px-2 py-0.5 font-display font-bold text-live">
-          <LiveDot /> {minute}'
+          <LiveDot /> {minute != null ? `${minute}'` : "LIVE"}
         </span>
       </div>
       <div className="flex items-center justify-between gap-2">
@@ -126,7 +154,7 @@ export function LiveMatchCard({ match, expanded }: { match: Match; expanded?: bo
             <span className="mx-2 text-muted-foreground">–</span>
             <span className={as > hs ? "text-primary" : ""}>{as}</span>
           </div>
-          <div className="text-[11px] text-muted-foreground">HT {match.ht}</div>
+          {match.ht && <div className="text-[11px] text-muted-foreground">HT {match.ht}</div>}
         </div>
         <div className="flex w-24 flex-col items-center gap-1 text-center">
           <TeamLogo team={match.away} size={40} />
@@ -193,8 +221,9 @@ export function UpcomingCard({ match, expanded }: { match: Match; expanded?: boo
 export function Header() {
   const live = matches.filter((m) => m.status === "live");
   const items = [
-    ...live.map((m) => `🔴 ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short} ${m.minute}'`),
+    ...live.map((m) => `🔴 ${teams[m.home]!.short} ${m.hs ?? ""}–${m.as ?? ""} ${teams[m.away]!.short}${m.minute != null ? ` ${m.minute}'` : ""}`),
     ...matches.filter((m) => m.status === "upcoming").map((m) => `${teams[m.home]!.short} v ${teams[m.away]!.short} · ${m.date} ${m.time}`),
+    ...matches.filter((m) => m.status === "ft").map((m) => `FT ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short}`),
   ];
   return (
     <header className="sticky top-0 z-30 border-b-2 border-primary bg-background">

@@ -21,17 +21,17 @@ export const Route = createFileRoute("/matches/$id")({
 function MatchDetail() {
   const { match: m } = Route.useLoaderData();
   const h = teams[m.home]!, a = teams[m.away]!;
-  const minute = useLiveMinute(m.minute ?? 0);
+  const minute = useLiveMinute(m.minute);
   const hs = m.hs ?? 0, as = m.as ?? 0;
-  const played = m.status !== "upcoming";
+  const played = m.status === "ft" || m.status === "live";
   return (
     <div>
       <div className="px-4 py-6" style={{ background: `linear-gradient(90deg, ${h.color}22, transparent 50%, ${a.color}22)` }}>
         <div className="mb-4 flex justify-center">
           {m.status === "live" ? (
-            <span className="flex items-center gap-1.5 rounded-full bg-live/15 px-3 py-1 font-display font-bold text-live"><LiveDot /> LIVE {minute}'</span>
+            <span className="flex items-center gap-1.5 rounded-full bg-live/15 px-3 py-1 font-display font-bold text-live"><LiveDot /> LIVE{minute != null && ` ${minute}'`}</span>
           ) : (
-            <span className="rounded-full bg-secondary px-3 py-1 font-display font-bold">{m.status === "ft" ? "FT" : `${m.date} · ${m.time}`}</span>
+            <span className="rounded-full bg-secondary px-3 py-1 font-display font-bold">{m.status === "ft" ? "FULL TIME" : m.status === "postponed" ? "POSTPONED" : `UPCOMING · ${m.date} · ${m.time}`}</span>
           )}
         </div>
         <div className="flex items-center justify-between">
@@ -56,7 +56,7 @@ function MatchDetail() {
                     <span>{e.icon}</span><span className="font-semibold">{e.player}</span><span className="font-display font-bold text-live">{e.min}'</span>
                   </div>
                 </div>
-              )) : <p className="text-center text-sm text-muted-foreground">No key events recorded.</p>}
+              )) : <p className="text-center text-sm text-muted-foreground">Match events not available.</p>}
             </div>
           </section>
         )}

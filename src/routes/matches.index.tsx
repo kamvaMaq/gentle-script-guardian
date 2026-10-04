@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { LiveMatchCard, TeamLogo, UpcomingCard } from "@/components/psl";
+import { LiveMatchCard, NextMatch, NoLiveMatches, TeamLogo, UpcomingCard } from "@/components/psl";
 import { matches, teams } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -30,14 +30,19 @@ function MatchesTab() {
         ))}
       </div>
       <div className="space-y-3">
-        {f === "live" && list.map((m) => <LiveMatchCard key={m.id} match={m} expanded />)}
+        {f === "live" && (list.length ? list.map((m) => <LiveMatchCard key={m.id} match={m} expanded />) : (
+          <>
+            <NoLiveMatches />
+            {matches.find((m) => m.status === "upcoming") && <NextMatch match={matches.find((m) => m.status === "upcoming")!} />}
+          </>
+        ))}
         {f === "upcoming" && list.map((m) => <UpcomingCard key={m.id} match={m} expanded />)}
         {f === "ft" && list.map((m) => (
           <Link key={m.id} to="/matches/$id" params={{ id: m.id }} className="card-hover flex items-center justify-between rounded-xl border bg-card p-3">
             <div className="flex w-24 items-center gap-2"><TeamLogo team={m.home} size={26} /><span className="font-semibold">{teams[m.home]!.short}</span></div>
             <div className="text-center">
               <div className="font-display text-2xl font-black">{m.hs} – {m.as}</div>
-              <div className="text-[11px] text-muted-foreground">FT · {m.date}</div>
+              <div className="text-[11px] text-muted-foreground">Full Time · {m.date}</div>
             </div>
             <div className="flex w-24 items-center justify-end gap-2"><span className="font-semibold">{teams[m.away]!.short}</span><TeamLogo team={m.away} size={26} /></div>
           </Link>
