@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { LiveMatchCard, SectionTitle, SponsorsStrip, TeamLogo, UpcomingCard } from "@/components/psl";
+import { LiveMatchCard, NextMatch, NoLiveMatches, SectionTitle, SponsorsStrip, TeamLogo, UpcomingCard } from "@/components/psl";
 import { catColor, matches, news, scorers, standings, teams } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +18,8 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const [banner, setBanner] = useState(true);
+  const live = matches.filter((m) => m.status === "live");
+  const upcoming = matches.filter((m) => m.status === "upcoming");
     return (
     <div className="space-y-7 p-4">
       {banner && (
@@ -35,10 +37,17 @@ function Home() {
         </div>
       )}
 
-      <section>
-        <SectionTitle live>Live Now</SectionTitle>
-        <div className="space-y-3">{matches.filter((m) => m.status === "live").map((m) => <LiveMatchCard key={m.id} match={m} />)}</div>
-      </section>
+      {live.length > 0 ? (
+        <section>
+          <SectionTitle live>Live Now</SectionTitle>
+          <div className="space-y-3">{live.map((m) => <LiveMatchCard key={m.id} match={m} />)}</div>
+        </section>
+      ) : (
+        <section className="space-y-3">
+          <NoLiveMatches />
+          {upcoming[0] && <NextMatch match={upcoming[0]} />}
+        </section>
+      )}
 
       <section>
         <SectionTitle>Top Scorers</SectionTitle>
@@ -63,7 +72,7 @@ function Home() {
 
       <section>
         <SectionTitle>Coming Up</SectionTitle>
-        <div className="space-y-2">{matches.filter((m) => m.status === "upcoming").map((m) => <UpcomingCard key={m.id} match={m} />)}</div>
+        <div className="space-y-2">{upcoming.slice(live.length ? 0 : 1).map((m) => <UpcomingCard key={m.id} match={m} />)}</div>
       </section>
 
       <section>

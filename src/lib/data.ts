@@ -63,33 +63,13 @@ export const scorers = [
 export type MatchEvent = { icon: string; player: string; min: number; side: "home" | "away" };
 export type Stats = { possession: [number, number]; shots: [number, number]; sot: [number, number]; corners: [number, number]; fouls: [number, number]; yellows: [number, number] };
 export type Match = {
-  id: string; status: "live" | "upcoming" | "ft"; home: string; away: string;
+  id: string; status: "live" | "upcoming" | "ft" | "postponed"; home: string; away: string;
   hs?: number; as?: number; ht?: string; minute?: number; venue: string; tv?: string;
   date?: string; time?: string; derby?: string; events?: MatchEvent[]; stats?: Stats;
 };
 
-// Live matches are simulated (GW9 fixtures shown in progress).
+// Only real fixtures and results go here. Never add invented live matches, scores or stats.
 export const matches: Match[] = [
-  {
-    id: "kai-ste", status: "live", home: "KAI", away: "STE", hs: 1, as: 0, ht: "1–0", minute: 58,
-    venue: "FNB Stadium", tv: "SuperSport PSL",
-    events: [
-      { icon: "⚽", player: "Duba", min: 31, side: "home" },
-      { icon: "🟨", player: "Plaatjies", min: 44, side: "away" },
-      { icon: "🔄", player: "Shabalala", min: 55, side: "home" },
-    ],
-    stats: { possession: [57, 43], shots: [10, 5], sot: [4, 2], corners: [6, 2], fouls: [9, 12], yellows: [0, 1] },
-  },
-  {
-    id: "ric-sun", status: "live", home: "RIC", away: "SUN", hs: 0, as: 2, ht: "0–1", minute: 63,
-    venue: "Princess Magogo Stadium", tv: "SuperSport Variety 1",
-    events: [
-      { icon: "⚽", player: "León", min: 19, side: "away" },
-      { icon: "🟨", player: "Xulu", min: 37, side: "home" },
-      { icon: "⚽", player: "Mailula", min: 52, side: "away" },
-    ],
-    stats: { possession: [34, 66], shots: [4, 13], sot: [1, 6], corners: [2, 8], fouls: [13, 7], yellows: [1, 0] },
-  },
   { id: "dur-ama", status: "upcoming", home: "DUR", away: "AMA", date: "Mon 13 Oct", time: "19:30", venue: "Chatsworth Stadium", tv: "SuperSport PSL", derby: "DURBAN DERBY" },
   { id: "orl-gal", status: "upcoming", home: "ORL", away: "GAL", date: "Mon 13 Oct", time: "19:30", venue: "Orlando Amstel Arena", tv: "SuperSport PSL" },
   { id: "chi-kru", status: "upcoming", home: "CHI", away: "KRU", date: "Fri 17 Oct", time: "15:30", venue: "Buffalo City Stadium", tv: "SuperSport PSL" },
@@ -97,7 +77,7 @@ export const matches: Match[] = [
   { id: "sek-mar", status: "upcoming", home: "SEK", away: "MAR", date: "Fri 17 Oct", time: "18:00", venue: "Peter Mokaba Stadium", tv: "SuperSport PSL" },
   { id: "siw-pol", status: "upcoming", home: "SIW", away: "POL", date: "Sat 18 Oct", time: "15:30", venue: "Dr Molemela Stadium", tv: "SuperSport PSL" },
   { id: "arr-kai-ft", status: "ft", home: "ARR", away: "KAI", hs: 0, as: 0, date: "20 Sep 2026", venue: "Mbombela Stadium", events: [] },
-  { id: "chi-gal-ft", status: "ft", home: "CHI", away: "GAL", hs: 1, as: 0, date: "20 Sep 2026", venue: "Solomon Mahlangu Stadium", events: [{ icon: "⚽", player: "Majadibodu", min: 0, side: "home" }] },
+  { id: "chi-gal-ft", status: "ft", home: "CHI", away: "GAL", hs: 1, as: 0, date: "20 Sep 2026", venue: "Solomon Mahlangu Stadium", events: [] },
   { id: "mil-ric-ft", status: "ft", home: "MIL", away: "RIC", hs: 5, as: 1, date: "13 Sep 2026", venue: "Sugar Ray Xulu Stadium", events: [] },
   { id: "sun-siw-ft", status: "ft", home: "SUN", away: "SIW", hs: 3, as: 0, date: "09 Sep 2026", venue: "Loftus Versfeld", events: [] },
   { id: "arr-sun-ft", status: "ft", home: "ARR", away: "SUN", hs: 1, as: 2, date: "06 Sep 2026", venue: "King Goodwill Zwelithini Stadium", events: [] },
