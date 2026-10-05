@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import logoAsset from "@/assets/betway-premiership-logo.webp.asset.json";
 import { SEASON, matches, sponsors, teams, type Match, type Res, type Stats } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import { Bell, CalendarDays, Check, ChevronRight, Clock3, Flame, Home, MapPin, Menu, Newspaper, Radio, Shield, Table2, Ticket, Trophy, Tv2, CircleDot, Globe2, Medal, Target, Mic2, List, CircleHelp } from "lucide-react";
+import { Bell, CalendarDays, Check, ChevronRight, Clock3, Flame, Home, MapPin, Menu, Newspaper, Table2, Ticket, Trophy, Tv2, CircleDot, Globe2, Medal, Target, Mic2, List, CircleHelp } from "lucide-react";
 import type { Article } from "@/lib/data";
 
 const newsIcons = [Ticket, Globe2, Trophy, MapPin, CircleDot, Medal, CircleHelp, Target, Mic2, List];

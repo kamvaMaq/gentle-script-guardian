@@ -1,0 +1,3 @@
+- [x] Replace emoji interface icons with consistent line icons.
+- [x] Match app chrome and accents to the black-and-white Betway Premiership logo.
+- [x] Verify mobile and desktop rendering across app tabs.
