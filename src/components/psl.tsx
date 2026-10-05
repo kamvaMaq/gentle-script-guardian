@@ -3,6 +3,14 @@ import { useEffect, useState } from "react";
 import logoAsset from "@/assets/betway-premiership-logo.webp.asset.json";
 import { SEASON, matches, sponsors, teams, type Match, type Res, type Stats } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { Bell, CalendarDays, Check, ChevronRight, Clock3, Flame, Home, MapPin, Menu, Newspaper, Radio, Shield, Table2, Ticket, Trophy, Tv2, CircleDot, Globe2, Medal, Target, Mic2, List, CircleHelp } from "lucide-react";
+import type { Article } from "@/lib/data";
+
+const newsIcons = [Ticket, Globe2, Trophy, MapPin, CircleDot, Medal, CircleHelp, Target, Mic2, List];
+export function NewsIcon({ article, size = 24 }: { article: Article; size?: number }) {
+  const Icon = newsIcons[Number(article.id) - 1] ?? Newspaper;
+  return <Icon size={size} strokeWidth={1.7} aria-hidden="true" />;
+}
 
 // The match minute must come from the data source; never advance it with a timer.
 export function useLiveMinute(base?: number) {
@@ -54,10 +62,10 @@ export function FormDot({ r }: { r: Res }) {
 export function NoLiveMatches() {
   return (
     <div className="rounded-xl border bg-card p-5 text-center">
-      <div className="text-3xl">⚽</div>
+      <CircleDot className="mx-auto text-primary" size={30} strokeWidth={1.6} aria-hidden="true" />
       <div className="mt-2 font-display text-xl font-black uppercase">No Live Matches</div>
       <p className="mt-1 text-sm text-muted-foreground">There's no Betway Premiership match currently in progress.</p>
-      <Link to="/matches" className="mt-3 inline-block font-display text-sm font-bold uppercase text-primary">View Upcoming Fixtures →</Link>
+      <Link to="/matches" className="mt-3 inline-flex items-center gap-1 font-display text-sm font-bold uppercase text-primary">View Upcoming Fixtures <ChevronRight size={16} /></Link>
     </div>
   );
 }
@@ -67,7 +75,7 @@ export function NextMatch({ match }: { match: Match }) {
   return (
     <Link to="/matches/$id" params={{ id: match.id }} className="card-hover block rounded-xl border border-l-4 border-l-primary bg-card p-4">
       <div className="mb-3 flex items-center justify-between text-xs">
-        <span className="font-display font-bold uppercase tracking-widest text-primary">⏱ Next Match</span>
+        <span className="flex items-center gap-1.5 font-display font-bold uppercase tracking-widest text-primary"><Clock3 size={14} /> Next Match</span>
         <span className="rounded-full bg-secondary px-2 py-0.5 font-display font-bold uppercase">Upcoming</span>
       </div>
       <div className="flex items-center justify-between">
@@ -78,7 +86,7 @@ export function NextMatch({ match }: { match: Match }) {
         </div>
         <div className="flex w-24 flex-col items-center gap-1 text-center"><TeamLogo team={match.away} size={44} /><span className="text-xs font-semibold">{a.name}</span></div>
       </div>
-      <div className="mt-3 text-center text-xs text-muted-foreground">📍 {match.venue}{match.derby && <span className="font-bold text-primary"> · {match.derby} 🔥</span>}</div>
+      <div className="mt-3 flex items-center justify-center gap-1 text-center text-xs text-muted-foreground"><MapPin size={13} /> {match.venue}{match.derby && <span className="inline-flex items-center gap-1 font-bold text-primary"> · {match.derby} <Flame size={13} /></span>}</div>
     </Link>
   );
 }
@@ -138,7 +146,7 @@ export function LiveMatchCard({ match, expanded }: { match: Match; expanded?: bo
       className="card-hover cursor-pointer rounded-xl border border-l-4 border-l-live bg-card p-4"
     >
       <div className="mb-3 flex items-center justify-between text-xs">
-        <span className="text-muted-foreground">{match.venue}{match.derby && <span className="ml-1 font-bold text-live"> · {match.derby} 🔥</span>}</span>
+        <span className="text-muted-foreground">{match.venue}{match.derby && <span className="ml-1 inline-flex items-center gap-1 font-bold text-live"> · {match.derby} <Flame size={12} /></span>}</span>
         <span className="flex items-center gap-1.5 rounded-full bg-live/15 px-2 py-0.5 font-display font-bold text-live">
           <LiveDot /> {minute != null ? `${minute}'` : "LIVE"}
         </span>
@@ -172,7 +180,7 @@ export function LiveMatchCard({ match, expanded }: { match: Match; expanded?: bo
         <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto">
           {match.events.map((e, i) => (
             <span key={i} className="shrink-0 rounded-full bg-secondary px-2.5 py-1 text-xs">
-              {e.icon} {e.player} <span className="text-live">{e.min}'</span>
+              <CircleDot size={13} className="inline-block align-middle" /> {e.player} <span className="text-live">{e.min}'</span>
             </span>
           ))}
         </div>
@@ -191,7 +199,7 @@ export function UpcomingCard({ match, expanded }: { match: Match; expanded?: boo
   const [cal, setCal] = useState(false);
   return (
     <article className={cn("card-hover rounded-xl border bg-card p-3", match.derby && "border-live")}>
-      {match.derby && <div className="mb-2 font-display text-xs font-bold text-live">🔥 {match.derby}</div>}
+      {match.derby && <div className="mb-2 flex items-center gap-1 font-display text-xs font-bold text-live"><Flame size={13} /> {match.derby}</div>}
       <Link to="/matches/$id" params={{ id: match.id }} className="flex items-center justify-between gap-2">
         <div className="flex w-28 items-center gap-2"><TeamLogo team={match.home} size={28} /><span className="text-sm font-semibold">{teams[match.home]!!.short}</span></div>
         <div className="text-center">
@@ -201,16 +209,16 @@ export function UpcomingCard({ match, expanded }: { match: Match; expanded?: boo
         <div className="flex w-28 items-center justify-end gap-2"><span className="text-sm font-semibold">{teams[match.away]!!.short}</span><TeamLogo team={match.away} size={28} /></div>
       </Link>
       <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
-        <span>📍 {match.venue}</span>
-        <span className="rounded bg-secondary px-1.5 py-0.5">📺 {match.tv}</span>
+        <span className="flex items-center gap-1"><MapPin size={12} /> {match.venue}</span>
+        <span className="flex items-center gap-1 rounded bg-secondary px-1.5 py-0.5"><Tv2 size={12} /> {match.tv}</span>
       </div>
       {expanded && (
         <div className="mt-3 grid grid-cols-2 gap-2">
           <button onClick={() => setRemind(true)} className={cn("rounded-lg border py-2 font-display text-sm font-bold uppercase", remind ? "border-success bg-success/15 text-success" : "hover:bg-accent")}>
-            {remind ? "✓ Reminder Set" : "🔔 Remind Me"}
+            <span className="inline-flex items-center gap-1.5">{remind ? <Check size={15} /> : <Bell size={15} />} {remind ? "Reminder Set" : "Remind Me"}</span>
           </button>
           <button onClick={() => setCal(true)} className={cn("rounded-lg border py-2 font-display text-sm font-bold uppercase", cal ? "border-success bg-success/15 text-success" : "hover:bg-accent")}>
-            {cal ? "✓ Added" : "📅 Add to Calendar"}
+            <span className="inline-flex items-center gap-1.5">{cal ? <Check size={15} /> : <CalendarDays size={15} />} {cal ? "Added" : "Add to Calendar"}</span>
           </button>
         </div>
       )}
@@ -221,27 +229,26 @@ export function UpcomingCard({ match, expanded }: { match: Match; expanded?: boo
 export function Header() {
   const live = matches.filter((m) => m.status === "live");
   const items = [
-    ...live.map((m) => `🔴 ${teams[m.home]!.short} ${m.hs ?? ""}–${m.as ?? ""} ${teams[m.away]!.short}${m.minute != null ? ` ${m.minute}'` : ""}`),
+    ...live.map((m) => `LIVE · ${teams[m.home]!.short} ${m.hs ?? ""}–${m.as ?? ""} ${teams[m.away]!.short}${m.minute != null ? ` ${m.minute}'` : ""}`),
     ...matches.filter((m) => m.status === "upcoming").map((m) => `${teams[m.home]!.short} v ${teams[m.away]!.short} · ${m.date} ${m.time}`),
     ...matches.filter((m) => m.status === "ft").map((m) => `FT ${teams[m.home]!.short} ${m.hs}–${m.as} ${teams[m.away]!.short}`),
   ];
   return (
-    <header className="sticky top-0 z-30 border-b-2 border-primary bg-background">
+    <header className="sticky top-0 z-30 border-b border-border bg-background">
       <div className="flex items-center justify-between gap-2 px-3 py-2">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoAsset.url} alt="Betway Premiership" className="h-9 w-auto rounded-sm bg-foreground object-contain px-1" />
+          <img src={logoAsset.url} alt="Betway Premiership" className="h-10 w-auto rounded-sm bg-foreground object-contain px-1" />
           <div className="leading-none">
             <div className="font-display text-base font-black uppercase tracking-wide">Betway Premiership</div>
             <div className="font-display text-sm font-bold text-primary">{SEASON}</div>
           </div>
         </Link>
         <div className="flex items-center gap-1.5">
-          <button aria-label="Notifications" className="rounded-full p-1.5 text-lg hover:bg-accent">🔔</button>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary font-display text-sm font-bold">KM</span>
-          <Link to="/more" aria-label="More" className="rounded-full p-1.5 text-xl hover:bg-accent">☰</Link>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-secondary font-display text-sm font-bold">KM</span>
+          <Link to="/more" aria-label="More" title="More" className="rounded-full p-1.5 hover:bg-accent"><Menu size={22} strokeWidth={1.8} /></Link>
         </div>
       </div>
-      <div className="overflow-hidden bg-ticker py-1.5">
+      <div className="overflow-hidden bg-ticker py-1.5 text-primary-foreground">
         <div className="ticker-track flex gap-8 whitespace-nowrap font-display text-sm font-bold">
           {[...items, ...items].map((t, i) => <span key={i}>{t}</span>)}
         </div>
@@ -275,16 +282,16 @@ export function SponsorsStrip() {
 export { SponsorTile };
 
 const tabs = [
-  { to: "/", label: "Home", icon: "⚽" },
-  { to: "/fantasy", label: "Fantasy", icon: "🏆", badge: true },
-  { to: "/matches", label: "Matches", icon: "📅" },
-  { to: "/table", label: "Table", icon: "📊" },
-  { to: "/news", label: "News", icon: "📰" },
+  { to: "/", label: "Home", icon: Home },
+  { to: "/fantasy", label: "Fantasy", icon: Trophy, badge: true },
+  { to: "/matches", label: "Matches", icon: CalendarDays },
+  { to: "/table", label: "Table", icon: Table2 },
+  { to: "/news", label: "News", icon: Newspaper },
 ] as const;
 
 export function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-[430px] -translate-x-1/2 grid-cols-5 border-t-2 border-primary bg-background">
+    <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-[430px] -translate-x-1/2 grid-cols-5 border-t border-border bg-background">
       {tabs.map((t) => (
         <Link
           key={t.to}
@@ -293,9 +300,9 @@ export function BottomNav() {
           className="relative flex flex-col items-center gap-0.5 py-2.5 text-muted-foreground"
           activeProps={{ className: "text-primary" }}
         >
-          <span className="relative text-xl">
-            {t.icon}
-            {"badge" in t && <span className="absolute -right-2 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-live text-[9px] font-bold text-foreground">3</span>}
+          <span className="relative">
+            <t.icon size={22} strokeWidth={1.8} aria-hidden="true" />
+            {"badge" in t && <span className="absolute -right-2 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground">3</span>}
           </span>
           <span className="font-display text-xs font-bold uppercase">{t.label}</span>
         </Link>
