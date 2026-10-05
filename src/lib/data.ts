@@ -121,6 +121,14 @@ export const fantasy = [
   fp("Ghampani Lungu", "MID", "ORL", 7.2, 5, 56, 24.6, 5.8, "GAL (H)", "Easy"),
   fp("Mduduzi Shabalala", "FWD", "KAI", 7.0, 7, 54, 22.3, 6.6, "STE (H)", "Medium"),
   fp("Tashreeq Matthews", "MID", "SUN", 7.0, 6, 52, 20.8, 5.6, "RIC (A)", "Easy"),
+  fp("Khuliso Mudau", "DEF", "SUN", 6.5, 6, 58, 33.4, 6.2, "RIC (A)", "Easy"),
+  fp("Aubrey Modiba", "DEF", "SUN", 6.2, 5, 54, 29.1, 5.9, "RIC (A)", "Easy"),
+  fp("Mbekezeli Mbokazi", "DEF", "ORL", 5.8, 6, 52, 27.5, 6.0, "GAL (H)", "Easy"),
+  fp("Nkosinathi Sibisi", "DEF", "ORL", 5.5, 4, 48, 21.2, 5.4, "GAL (H)", "Easy"),
+  fp("Inácio Miguel", "DEF", "KAI", 5.0, 5, 44, 17.8, 5.1, "STE (H)", "Medium"),
+  fp("Ronwen Williams", "GK", "SUN", 6.0, 6, 56, 38.6, 6.1, "RIC (A)", "Easy"),
+  fp("Sipho Chaine", "GK", "ORL", 5.5, 6, 52, 30.2, 5.8, "GAL (H)", "Easy"),
+  fp("Brandon Petersen", "GK", "KAI", 5.0, 2, 40, 14.9, 4.6, "STE (H)", "Medium"),
 ];
 
 const S = (f: string) => `https://awesslegacycontent.blob.core.windows.net/newpsl/images/sponsors/${f}`;
