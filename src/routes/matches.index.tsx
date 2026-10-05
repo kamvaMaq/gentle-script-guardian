@@ -17,7 +17,7 @@ export const Route = createFileRoute("/matches/")({
 });
 
 const filters = ["live", "upcoming", "ft"] as const;
-const labels = { live: "🔴 Live", upcoming: "Upcoming", ft: "Results" };
+const labels = { live: "Live", upcoming: "Upcoming", ft: "Results" };
 
 function MatchesTab() {
   const [f, setF] = useState<(typeof filters)[number]>("live");

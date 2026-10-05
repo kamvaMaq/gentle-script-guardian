@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SectionTitle } from "@/components/psl";
 import { fantasy, teams, type Pos } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { Crosshair, Shield, Goal, Shirt, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/fantasy")({
   head: () => ({
@@ -19,12 +20,12 @@ const posChip: Record<Pos, string> = { GK: "bg-amber/20 text-amber", DEF: "bg-su
 const diffColor: Record<string, string> = { Easy: "text-success", Medium: "text-amber", Hard: "text-live" };
 
 const byName = (n: string) => fantasy.find((p) => p.name === n);
-const lines: { pos: Pos; icon: string; picks: (string | null)[] }[] = [
-  { pos: "FWD", icon: "⚡", picks: ["Thandolwenkosi Ngwenya"] },
-  { pos: "FWD", icon: "⚡", picks: ["Brayan León", "Wandile Duba"] },
-  { pos: "MID", icon: "🎯", picks: [null, "Oswin Appollis", "Teboho Mokoena", "Quwan Plaatjies", null] },
-  { pos: "DEF", icon: "🛡️", picks: [null, null, null] },
-  { pos: "GK", icon: "🧤", picks: [null] },
+const lines: { pos: Pos; icon: typeof Zap; picks: (string | null)[] }[] = [
+  { pos: "FWD", icon: Zap, picks: ["Thandolwenkosi Ngwenya"] },
+  { pos: "FWD", icon: Zap, picks: ["Brayan León", "Wandile Duba"] },
+  { pos: "MID", icon: Crosshair, picks: [null, "Oswin Appollis", "Teboho Mokoena", "Quwan Plaatjies", null] },
+  { pos: "DEF", icon: Shield, picks: [null, null, null] },
+  { pos: "GK", icon: Goal, picks: [null] },
 ];
 
 const rules = [
@@ -54,13 +55,13 @@ function FantasyTab() {
                 const p = n ? byName(n) : null;
                 return p ? (
                   <div key={i} className="flex w-16 flex-col items-center rounded-lg border-2 bg-background/80 px-1 py-1.5 text-center" style={{ borderColor: teams[p.team]!.color }}>
-                    <span className="text-xl">👕</span>
+                    <Shirt size={20} strokeWidth={1.7} />
                     <span className="w-full truncate text-[11px] font-bold">{p.name.split(" ").slice(-1)}</span>
                     <span className="text-[10px] text-primary">R{p.price.toFixed(1)}M</span>
                   </div>
                 ) : (
                   <div key={i} className="flex w-16 flex-col items-center rounded-lg border-2 border-dashed border-foreground/50 px-1 py-1.5 text-center text-foreground/80">
-                    <span className="text-xl">{l.icon}</span><span className="text-[11px] font-bold">{l.pos}</span><span className="text-[10px]">+ Add</span>
+                    <l.icon size={20} strokeWidth={1.7} /><span className="text-[11px] font-bold">{l.pos}</span><span className="text-[10px]">+ Add</span>
                   </div>
                 );
               })}
