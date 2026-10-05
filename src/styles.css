@@ -45,15 +45,15 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
   --background: oklch(0 0 0);
   --foreground: oklch(0.97 0 0);
   --card: oklch(0.18 0 0);
   --card-foreground: oklch(0.97 0 0);
   --popover: oklch(0.18 0 0);
   --popover-foreground: oklch(0.97 0 0);
-  --primary: oklch(0.53 0.22 29);
-  --primary-foreground: oklch(1 0 0);
+  --primary: oklch(0.96 0 0);
+  --primary-foreground: oklch(0.1 0 0);
   --secondary: oklch(0.22 0 0);
   --secondary-foreground: oklch(0.97 0 0);
   --muted: oklch(0.22 0 0);
@@ -64,25 +64,25 @@
   --destructive-foreground: oklch(0.97 0 0);
   --border: oklch(1 0 0 / 7%);
   --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.53 0.22 29);
-  --live: oklch(0.64 0.21 25);
-  --gold: oklch(0.89 0.18 95);
-  --silver: oklch(0.8 0.01 260);
-  --bronze: oklch(0.65 0.11 55);
-  --fantasy: oklch(0.63 0.25 305);
-  --amber: oklch(0.79 0.16 75);
-  --info: oklch(0.62 0.19 255);
-  --orange: oklch(0.72 0.18 50);
+  --ring: oklch(0.96 0 0);
+  --live: oklch(0.88 0 0);
+  --gold: oklch(0.94 0 0);
+  --silver: oklch(0.72 0 0);
+  --bronze: oklch(0.55 0 0);
+  --fantasy: oklch(0.82 0 0);
+  --amber: oklch(0.78 0 0);
+  --info: oklch(0.8 0 0);
+  --orange: oklch(0.82 0 0);
   --pitch: oklch(0.45 0.12 150);
-  --success: oklch(0.72 0.19 150);
-  --ticker: oklch(0.28 0.07 155);
+  --success: oklch(0.82 0 0);
+  --ticker: oklch(0.92 0 0);
   --surface: oklch(0.13 0 0);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   body {
-    background-color: oklch(0.1 0 0);
+    background-color: var(--background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
@@ -114,16 +114,16 @@
 }
 
 @utility bg-derby {
-  background: linear-gradient(135deg, oklch(0.53 0.22 29), oklch(0.22 0.08 25));
-  animation: banner-glow 2.4s ease-in-out infinite;
+  background: linear-gradient(135deg, var(--secondary), var(--surface));
+  border: 1px solid var(--border);
 }
 
 @utility bg-fantasy-header {
-  background: linear-gradient(135deg, oklch(0.4 0.18 29), oklch(0.15 0 0));
+  background: linear-gradient(135deg, var(--secondary), var(--surface));
 }
 
 @utility rainbow-bar {
-  background: linear-gradient(90deg, oklch(0.45 0.16 255) 0 25%, oklch(0.5 0.13 155) 25% 50%, oklch(0.89 0.18 95) 50% 75%, oklch(0.53 0.22 29) 75%);
+  background: linear-gradient(90deg, var(--bronze) 0 25%, var(--silver) 25% 50%, var(--foreground) 50% 75%, var(--muted-foreground) 75%);
 }
 
 @utility bg-pitch {
@@ -131,17 +131,17 @@
 }
 
 @utility glow-orange {
-  box-shadow: 0 0 24px oklch(0.72 0.18 50 / 35%);
+  box-shadow: 0 0 24px color-mix(in oklab, var(--foreground) 20%, transparent);
 }
 
 @keyframes pulse-live {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 oklch(0.64 0.21 25 / 70%); }
-  50% { opacity: 0.6; box-shadow: 0 0 0 5px oklch(0.64 0.21 25 / 0%); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in oklab, var(--live) 65%, transparent); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 5px transparent; }
 }
 
 @keyframes banner-glow {
-  0%, 100% { box-shadow: 0 0 0 0 oklch(0.53 0.22 29 / 50%); }
-  50% { box-shadow: 0 0 22px 2px oklch(0.53 0.22 29 / 45%); }
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 22px 2px color-mix(in oklab, var(--foreground) 20%, transparent); }
 }
 
 @keyframes ticker {
