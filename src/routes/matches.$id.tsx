@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { LiveDot, SectionTitle, StatBar, TeamLogo, statRows, useLiveMinute } from "@/components/psl";
 import { matches, teams } from "@/lib/data";
+import { ArrowLeft, CircleDot, MapPin, Tv2 } from "lucide-react";
 
 export const Route = createFileRoute("/matches/$id")({
   loader: ({ params }) => {
@@ -41,7 +42,7 @@ function MatchDetail() {
           </div>
           <div className="flex w-28 flex-col items-center gap-2 text-center"><TeamLogo team={m.away} size={56} /><span className="text-sm font-semibold">{a.name}</span></div>
         </div>
-        <div className="mt-4 text-center text-xs text-muted-foreground">📍 {m.venue}{m.tv && ` · 📺 ${m.tv}`}</div>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-center text-xs text-muted-foreground"><span className="inline-flex items-center gap-1"><MapPin size={13} /> {m.venue}</span>{m.tv && <span className="inline-flex items-center gap-1"> · <Tv2 size={13} /> {m.tv}</span>}</div>
       </div>
 
       <div className="space-y-7 p-4">
@@ -53,7 +54,7 @@ function MatchDetail() {
               {m.events && m.events.length ? m.events.map((e, i) => (
                 <div key={i} className={`flex ${e.side === "home" ? "justify-start" : "justify-end"}`}>
                   <div className={`flex w-[46%] items-center gap-2 text-sm ${e.side === "away" ? "flex-row-reverse text-right" : ""}`}>
-                    <span>{e.icon}</span><span className="font-semibold">{e.player}</span><span className="font-display font-bold text-live">{e.min}'</span>
+                    <CircleDot size={15} /><span className="font-semibold">{e.player}</span><span className="font-display font-bold text-live">{e.min}'</span>
                   </div>
                 </div>
               )) : <p className="text-center text-sm text-muted-foreground">Match events not available.</p>}
@@ -68,7 +69,7 @@ function MatchDetail() {
             </div>
           </section>
         )}
-        <Link to="/matches" className="block rounded-lg border py-3 text-center font-display font-bold uppercase hover:bg-accent">← Back to Matches</Link>
+        <Link to="/matches" className="flex items-center justify-center gap-2 rounded-lg border py-3 font-display font-bold uppercase hover:bg-accent"><ArrowLeft size={16} /> Back to Matches</Link>
       </div>
     </div>
   );

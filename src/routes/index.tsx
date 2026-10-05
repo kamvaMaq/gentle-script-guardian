@@ -3,6 +3,8 @@ import { useState } from "react";
 import { LiveMatchCard, NextMatch, NoLiveMatches, SectionTitle, SponsorsStrip, TeamLogo, UpcomingCard } from "@/components/psl";
 import { catColor, matches, news, scorers, standings, teams } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { CircleDot, Flame, Ticket } from "lucide-react";
+import { NewsIcon } from "@/components/psl";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,7 +27,7 @@ function Home() {
       {banner && (
         <div className="bg-derby relative rounded-xl p-4">
           <button onClick={() => setBanner(false)} aria-label="Dismiss" className="absolute right-3 top-2 text-xl text-foreground/70">×</button>
-          <div className="font-display text-sm font-bold uppercase tracking-widest">⚽ MTN8 Final</div>
+          <div className="flex items-center gap-2 font-display text-sm font-bold uppercase tracking-widest"><CircleDot size={16} /> MTN8 Final</div>
           <div className="my-3 flex items-center justify-center gap-4">
             <TeamLogo team="ORL" size={48} />
             <span className="font-display text-2xl font-black">VS</span>
@@ -33,7 +35,7 @@ function Home() {
           </div>
           <div className="text-center font-display text-lg font-bold uppercase">Orlando Pirates vs Mamelodi Sundowns</div>
           <div className="text-center text-sm text-foreground/80">Moses Mabhida Stadium, Durban</div>
-          <div className="mt-3 flex items-center justify-center gap-2 font-display font-bold uppercase"><span className="live-dot" /> Tickets Sold Out</div>
+          <div className="mt-3 flex items-center justify-center gap-2 font-display font-bold uppercase"><Ticket size={16} /> Tickets Sold Out</div>
         </div>
       )}
 
@@ -58,7 +60,7 @@ function Home() {
                 i === 0 ? "bg-gold text-background" : i === 1 ? "bg-silver text-background" : i === 2 ? "bg-bronze text-background" : "bg-secondary")}>{i + 1}</span>
               <span className="h-2.5 w-2.5 rounded-full" style={{ background: teams[s.team]!.color }} />
               <div className="flex-1">
-                <div className="text-sm font-semibold">{s.name} {s.flag}</div>
+                <div className="text-sm font-semibold">{s.name}</div>
                 <div className="text-xs text-muted-foreground">{teams[s.team]!.name}</div>
               </div>
               <div className="text-right">
@@ -95,9 +97,9 @@ function Home() {
         <div className="space-y-2">
           {news.slice(0, 4).map((n) => (
             <Link key={n.id} to="/news/$id" params={{ id: n.id }} className="card-hover flex gap-3 rounded-xl border bg-card p-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-secondary text-2xl">{n.emoji}</div>
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary"><NewsIcon article={n} /></div>
               <div>
-                <span className={cn("rounded px-1.5 py-0.5 text-[10px] font-bold uppercase", catColor[n.cat])}>{n.cat}{n.hot && " 🔥"}</span>
+                <span className={cn("inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-bold uppercase", catColor[n.cat])}>{n.cat}{n.hot && <Flame size={11} />}</span>
                 <div className="mt-1 text-sm font-semibold leading-snug">{n.title}</div>
                 <div className="mt-0.5 text-[11px] text-muted-foreground">{n.author} · {n.ago}</div>
               </div>

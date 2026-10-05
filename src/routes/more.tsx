@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SectionTitle, SponsorTile } from "@/components/psl";
 import { sponsors } from "@/lib/data";
+import { ChevronRight, ShieldCheck, Trophy } from "lucide-react";
 
 export const Route = createFileRoute("/more")({
   head: () => ({
@@ -22,7 +23,7 @@ function More() {
       <section>
         <SectionTitle>Tournaments</SectionTitle>
         <div className="divide-y rounded-xl border bg-card">
-          {tournaments.map((t) => <div key={t} className="flex justify-between px-4 py-3 text-sm font-semibold"><span>🏆 {t}</span><span className="text-muted-foreground">›</span></div>)}
+          {tournaments.map((t) => <div key={t} className="flex justify-between px-4 py-3 text-sm font-semibold"><span className="flex items-center gap-2"><Trophy size={16} strokeWidth={1.7} /> {t}</span><ChevronRight size={16} className="text-muted-foreground" /></div>)}
         </div>
       </section>
       <section>
@@ -48,7 +49,7 @@ function More() {
           <a href="https://psl.co.za/" target="_blank" rel="noreferrer" className="col-span-2 rounded-lg border bg-card py-3 text-center font-display font-bold">psl.co.za</a>
         </div>
       </section>
-      <p className="rounded-lg border border-primary bg-primary/10 p-3 text-xs">🔞 Responsible gambling: Betway is for people aged 18 and over only. Please gamble responsibly.</p>
+      <p className="flex items-start gap-2 rounded-lg border border-primary bg-primary/10 p-3 text-xs"><ShieldCheck size={16} className="shrink-0" /> Responsible gambling: Betway is for people aged 18 and over only. Please gamble responsibly.</p>
     </div>
   );
 }
