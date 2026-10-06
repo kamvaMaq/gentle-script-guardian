@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import logoAsset from "@/assets/betway-premiership-logo.webp.asset.json";
 import { SEASON, matches, sponsors, teams, type Match, type Res, type Stats } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import { Bell, CalendarDays, Check, ChevronRight, Clock3, Flame, Home, MapPin, Menu, Newspaper, Table2, Ticket, Trophy, Tv2, CircleDot, Globe2, Medal, Target, Mic2, List, CircleHelp } from "lucide-react";
+import { BarChart3, Bell, CalendarDays, Check, ChevronRight, Clock3, Flame, Home, MapPin, Menu, Newspaper, Table2, Ticket, Trophy, Tv2, CircleDot, Globe2, Medal, Target, Mic2, List, CircleHelp } from "lucide-react";
 import type { Article } from "@/lib/data";
 
 const newsIcons = [Ticket, Globe2, Trophy, MapPin, CircleDot, Medal, CircleHelp, Target, Mic2, List];
@@ -286,12 +286,13 @@ const tabs = [
   { to: "/fantasy", label: "Fantasy", icon: Trophy, badge: true },
   { to: "/matches", label: "Matches", icon: CalendarDays },
   { to: "/table", label: "Table", icon: Table2 },
+  { to: "/stats", label: "Stats", icon: BarChart3 },
   { to: "/news", label: "News", icon: Newspaper },
 ] as const;
 
 export function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-[430px] -translate-x-1/2 grid-cols-5 border-t border-border bg-background">
+    <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-[430px] -translate-x-1/2 grid-cols-6 border-t border-border bg-background">
       {tabs.map((t) => (
         <Link
           key={t.to}
