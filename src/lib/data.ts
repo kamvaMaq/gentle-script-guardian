@@ -48,12 +48,12 @@ export const standings: Row[] = [
 ];
 
 export const scorers = [
-  { name: "Thandolwenkosi Ngwenya", team: "AMA", flag: "🇿🇼", goals: 6, assists: 2, apps: 7 },
+  { name: "Thandolwenkosi Ngwenya", team: "AMA", flag: "🇿🇼", goals: 8, assists: 2, apps: 7 },
   { name: "Victor Letsoalo", team: "GAL", flag: "🇿🇦", goals: 4, assists: 1, apps: 7 },
   { name: "Wandile Duba", team: "KAI", flag: "🇿🇦", goals: 3, assists: 2, apps: 7 },
   { name: "Brayan León", team: "SUN", flag: "🇨🇴", goals: 3, assists: 4, apps: 8 },
   { name: "Quwan Plaatjies", team: "STE", flag: "🇿🇦", goals: 3, assists: 1, apps: 7 },
-  { name: "Nqaba Xulu", team: "RIC", flag: "🇿🇦", goals: 3, assists: 0, apps: 7 },
+  { name: "Nqaba Xulu", team: "RIC", flag: "🇿🇦", goals: 5, assists: 0, apps: 7 },
   { name: "Oswin Appollis", team: "ORL", flag: "🇿🇦", goals: 2, assists: 3, apps: 7 },
   { name: "Tshepang Moremi", team: "ORL", flag: "🇿🇦", goals: 2, assists: 2, apps: 7 },
   { name: "Teboho Mokoena", team: "SUN", flag: "🇿🇦", goals: 2, assists: 5, apps: 8 },
