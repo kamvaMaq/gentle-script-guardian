@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FantasyRouteImport } from './routes/fantasy'
 import { Route as MoreRouteImport } from './routes/more'
+import { Route as StatsRouteImport } from './routes/stats'
 import { Route as TableRouteImport } from './routes/table'
 import { Route as MatchesIndexRouteImport } from './routes/matches.index'
 import { Route as MatchesIdRouteImport } from './routes/matches.$id'
@@ -31,6 +32,11 @@ const FantasyRoute = FantasyRouteImport.update({
 const MoreRoute = MoreRouteImport.update({
   id: '/more',
   path: '/more',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatsRoute = StatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TableRoute = TableRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fantasy': typeof FantasyRoute
   '/more': typeof MoreRoute
+  '/stats': typeof StatsRoute
   '/table': typeof TableRoute
   '/matches/$id': typeof MatchesIdRoute
   '/news/$id': typeof NewsIdRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fantasy': typeof FantasyRoute
   '/more': typeof MoreRoute
+  '/stats': typeof StatsRoute
   '/table': typeof TableRoute
   '/matches/$id': typeof MatchesIdRoute
   '/news/$id': typeof NewsIdRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/fantasy': typeof FantasyRoute
   '/more': typeof MoreRoute
+  '/stats': typeof StatsRoute
   '/table': typeof TableRoute
   '/matches/$id': typeof MatchesIdRoute
   '/news/$id': typeof NewsIdRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fantasy'
     | '/more'
+    | '/stats'
     | '/table'
     | '/matches/$id'
     | '/news/$id'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fantasy'
     | '/more'
+    | '/stats'
     | '/table'
     | '/matches/$id'
     | '/news/$id'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fantasy'
     | '/more'
+    | '/stats'
     | '/table'
     | '/matches/$id'
     | '/news/$id'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FantasyRoute: typeof FantasyRoute
   MoreRoute: typeof MoreRoute
+  StatsRoute: typeof StatsRoute
   TableRoute: typeof TableRoute
   MatchesIdRoute: typeof MatchesIdRoute
   NewsIdRoute: typeof NewsIdRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/more'
       fullPath: '/more'
       preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stats': {
+      id: '/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof StatsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/table': {
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FantasyRoute: FantasyRoute,
   MoreRoute: MoreRoute,
+  StatsRoute: StatsRoute,
   TableRoute: TableRoute,
   MatchesIdRoute: MatchesIdRoute,
   NewsIdRoute: NewsIdRoute,
