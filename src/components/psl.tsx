@@ -305,7 +305,7 @@ export function BottomNav() {
             <t.icon size={22} strokeWidth={1.8} aria-hidden="true" />
             {"badge" in t && <span className="absolute -right-2 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground">3</span>}
           </span>
-          <span className="font-display text-xs font-bold uppercase">{t.label}</span>
+          <span className="font-display text-[10px] font-bold uppercase">{t.label}</span>
         </Link>
       ))}
     </nav>
