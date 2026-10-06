@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SectionTitle } from "@/components/psl";
-import { SEASON, fantasy, scorers, standings, teams } from "@/lib/data";
+import { SEASON, standings, teams } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Crown, Goal, Handshake, Shield, Shirt, Trophy, Timer, Flame } from "lucide-react";
 
@@ -22,11 +22,35 @@ export const Route = createFileRoute("/stats")({
 type Leader = { name: string; team: string; v: number };
 const top = (arr: Leader[]) => [...arr].sort((a, b) => b.v - a.v).slice(0, 5);
 
+const goalsLeaders: Leader[] = [
+  { name: "Thandolwenkosi Ngwenya", team: "AMA", v: 8 },
+  { name: "Nqaba Xulu", team: "RIC", v: 5 },
+  { name: "Victor Letsoalo", team: "GAL", v: 4 },
+  { name: "Brayan León", team: "SUN", v: 3 },
+  { name: "Mvelo Zikakayo", team: "MIL", v: 3 },
+  { name: "Khetukuthula Ndlovu", team: "KRU", v: 3 },
+  { name: "Tshepang Moremi", team: "ORL", v: 3 },
+  { name: "Quwan Plaatjies", team: "STE", v: 3 },
+  { name: "Wandile Duba", team: "KAI", v: 3 },
+];
+const assistLeaders: Leader[] = [
+  { name: "Tashreeq Matthews", team: "SUN", v: 3 },
+  { name: "Nkosikhona Radebe", team: "AMA", v: 3 },
+  { name: "Moses Mthembu", team: "RIC", v: 3 },
+  { name: "Oswin Appollis", team: "ORL", v: 2 },
+  { name: "Lebone Seema", team: "ORL", v: 2 },
+  { name: "Siyanda Ndlovu", team: "KAI", v: 2 },
+];
 const playerCats = [
-  { key: "goals", label: "Goals", icon: Goal, rows: top(scorers.map((s) => ({ name: s.name, team: s.team, v: s.goals }))) },
-  { key: "assists", label: "Assists", icon: Handshake, rows: top(scorers.map((s) => ({ name: s.name, team: s.team, v: s.assists }))) },
-  { key: "cs", label: "Clean Sheets", icon: Shield, rows: top(fantasy.filter((p) => p.pos === "GK").map((p) => ({ name: p.name, team: p.team, v: Math.round(p.total / 10) }))) },
-  { key: "pts", label: "Fantasy Points", icon: Flame, rows: top(fantasy.map((p) => ({ name: p.name, team: p.team, v: p.total }))) },
+  { key: "goals", label: "Goals", icon: Goal, rows: goalsLeaders },
+  { key: "assists", label: "Assists", icon: Handshake, rows: assistLeaders },
+];
+
+const seasonRecords = [
+  { icon: Goal, label: "Biggest home win", value: "5-1", who: "Milford 5-1 Richards Bay" },
+  { icon: Flame, label: "Highest scoring", value: "7", who: "Sundowns 5-2 AmaZulu" },
+  { icon: Shield, label: "Biggest away win", value: "0-4", who: "Kruger United 0-4 Pirates" },
+  { icon: Timer, label: "Longest unbeaten", value: "8", who: "Mamelodi Sundowns" },
 ];
 
 const clubCats = [
@@ -55,15 +79,16 @@ const records = [
   { icon: Goal, label: "Most goals in a season", value: "25", who: "Collins Mbesuma · Kaizer Chiefs · 2004/05" },
   { icon: Crown, label: "Most consecutive titles", value: "8", who: "Mamelodi Sundowns · 2017/18 – 2024/25" },
   { icon: Trophy, label: "Most league titles", value: "18", who: "Mamelodi Sundowns" },
-  { icon: Timer, label: "Longest unbeaten run", value: "—", who: "To be confirmed" },
+  { icon: Shirt, label: "Most goals in PSL era", value: "130", who: "Peter Shalulile · record set Aug 2025" },
 ];
 
 const allTimeScorers = [
-  { name: "Siyabonga Nomvethe", team: "AmaZulu / Golden Arrows", v: 0 },
-  { name: "Collins Mbesuma", team: "Kaizer Chiefs / Others", v: 0 },
-  { name: "Katlego Mashego", team: "Sundowns / Others", v: 0 },
-  { name: "Bernard Parker", team: "Kaizer Chiefs / Others", v: 0 },
-  { name: "Peter Shalulile", team: "Mamelodi Sundowns", v: 0 },
+  { name: "Peter Shalulile", team: "Highlands Park / Mamelodi Sundowns", v: "130" },
+  { name: "Siyabonga Nomvethe", team: "Kaizer Chiefs / Swallows / AmaZulu", v: "129" },
+  { name: "Bradley Grobler", team: "SuperSport United / Sekhukhune", v: "125" },
+  { name: "Daniel Mudau", team: "Mamelodi Sundowns", v: "110" },
+  { name: "Mabhuti Khenyeza", team: "Golden Arrows / Chiefs / others", v: "110" },
+  { name: "Manuel Bucuane", team: "Tembisa Classic / Chiefs / others", v: "104" },
 ];
 
 function Board({ title, rows, icon: Icon }: { title: string; rows: Leader[]; icon?: typeof Goal }) {
@@ -104,7 +129,25 @@ function StatsPage() {
         ))}
       </div>
 
-      {tab === "players" && <div className="space-y-4">{playerCats.map((c) => <Board key={c.key} title={c.label} rows={c.rows} icon={c.icon} />)}</div>}
+      {tab === "players" && (
+        <div className="space-y-4">
+          {playerCats.map((c) => <Board key={c.key} title={c.label} rows={c.rows} icon={c.icon} />)}
+          <section>
+            <SectionTitle>Season Records</SectionTitle>
+            <div className="grid grid-cols-2 gap-2">
+              {seasonRecords.map((r) => (
+                <div key={r.label} className="rounded-xl border bg-card p-3">
+                  <r.icon size={18} className="text-primary" />
+                  <div className="mt-1 font-display text-2xl font-black">{r.value}</div>
+                  <div className="text-xs font-semibold">{r.label}</div>
+                  <div className="text-[10px] text-muted-foreground">{r.who}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+          <p className="text-xs text-muted-foreground">Season figures from ESPN, Transfermarkt and FutbolQuiniela, early October 2026.</p>
+        </div>
+      )}
       {tab === "clubs" && <div className="space-y-4">{clubCats.map((c) => <Board key={c.label} title={c.label} rows={c.rows} />)}</div>}
 
       {tab === "alltime" && (
@@ -142,9 +185,9 @@ function StatsPage() {
           <section>
             <SectionTitle>All-Time Goal Scorers</SectionTitle>
             <div className="divide-y rounded-xl border bg-card">
-              {allTimeScorers.map((p, i) => <div key={p.name} className="flex items-center gap-3 px-3 py-2 text-sm"><span className="w-4 text-muted-foreground">{i + 1}</span><div><div className="font-semibold">{p.name}</div><div className="text-xs text-muted-foreground">{p.team}</div></div></div>)}
+              {allTimeScorers.map((p, i) => <div key={p.name} className="flex items-center gap-3 px-3 py-2 text-sm"><span className="w-4 text-muted-foreground">{i + 1}</span><div className="flex-1"><div className="font-semibold">{p.name}</div><div className="text-xs text-muted-foreground">{p.team}</div></div><span className="font-display text-lg font-black text-primary">{p.v}</span></div>)}
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">Goal totals will appear once official figures are added.</p>
+            <p className="mt-2 text-xs text-muted-foreground">League goals as of September 2025. Shalulile and Grobler are still adding to their totals.</p>
           </section>
         </div>
       )}
